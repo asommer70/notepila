@@ -1,8 +1,8 @@
 import React, { Component } from 'react';
 
 export default class Notes extends Component {
-  constructor() {
-    super();
+  constructor(props) {
+    super(props);
 
     this.state = {
       notes: {}
