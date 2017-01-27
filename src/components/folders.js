@@ -1,22 +1,21 @@
 import React, { Component } from 'react';
 
-export default class Notes extends Component {
+export default class Folders extends Component {
   constructor() {
     super();
 
     this.state = {
-      notes: {}
+      folders: {}
     }
 
     // Get notes from PouchDB.
-    console.log('Getting data... and stuf!');
+    console.log('Getting data... about folders!');
   }
 
   render() {
     return (
       <div>
-        <h2>Notes</h2>
-        <p>I think it's working...</p>
+        <h2>Folders</h2>
       </div>
     )
   }
