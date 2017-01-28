@@ -1,6 +1,7 @@
 *.swp
 *.swo
 .DS_Store
+npm-debug.log
 
 dist/js/bundle.js
 dist/js/vendor.js
