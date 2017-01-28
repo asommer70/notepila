@@ -1,10 +1,16 @@
-var expect = require('chai').expect;
+import { renderComponent , expect } from '../test_helper';
+import Folders from '../../src/components/folders';
 
-describe('Folders', function() {
+describe('Folders' , () => {
+  let component;
 
-  describe('index', function() {
-    it('should return a list of folders', function(done) {
-      
-    });
+  beforeEach((done) => {
+    component = renderComponent(Folders);
+    done();
   });
-})
+
+  it('renders something', (done) => {
+    expect(component).to.exist;
+    done();
+  });
+});
