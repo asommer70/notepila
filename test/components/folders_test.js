@@ -1,10 +1,22 @@
-var expect = require('chai').expect;
+import PouchDB from 'pouchdb';
+import { renderComponent , expect } from '../test_helper';
+import Folders from '../../src/components/folders';
 
-describe('Folders', function() {
+var db = new PouchDB('notepila');
 
-  describe('index', function() {
-    it('should return a list of folders', function(done) {
-      
-    });
+describe('Folders' , () => {
+  let component;
+
+  beforeEach(() => {
+    component = renderComponent(Folders, {db: db});
   });
-})
+
+  it('renders something', () => {
+    expect(component).to.exist;
+  });
+
+  it('has a main folder', () => {
+    console.log('component:', component);
+    expect(component).to.be.contain('Main');
+  });
+});

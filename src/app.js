@@ -10,14 +10,15 @@ import Notes from './components/notes';
 
 var db = new PouchDB('notepila');
 var remoteCouch = false;
+// db.destroy();
 
 class App extends Component {
   constructor(props) {
     super(props);
 
-    // create a design doc
+    // Create the folders design doc.
     var ddoc = {
-      _id: '_design/index',
+      _id: '_design/folders',
       views: {
         index: {
           map: function mapFun(doc) {
@@ -29,33 +30,14 @@ class App extends Component {
       }
     }
 
-    // save the design doc
-    db.put(ddoc).catch(function (err) {
+    // Save the _design/folders view to the database.
+    db.put(ddoc).catch((err) => {
       if (err.name !== 'conflict') {
         throw err;
       }
-      // ignore if doc already exists
-    }).then(function () {
-      // find docs where type === 'folder'
-      return db.query('index', {
-        include_docs: true
-      });
-    }).then(function (result) {
-      // handle result
-    }).catch(function (err) {
-      console.log(err);
+    }).catch((err) => {
+      // Catch the error, but don't need to do anything cause the folders design doc is already created.
     });
-
-    //
-    // db.post({  
-    //   type: 'folder',
-    //   name: 'Ideas'
-    // }).then(function (response) {
-    //   // handle response
-    //   console.log('create folder response:', response);
-    // }).catch(function (err) {
-    //   console.log(err);
-    // });
   }
 
   render() {
