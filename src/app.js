@@ -38,9 +38,37 @@ class App extends Component {
     }).catch((err) => {
       // Catch the error, but don't need to do anything cause the folders design doc is already created.
     });
+
+    this.state = {
+      showNewFolder: false,
+      newFolder: ''
+    }
+  }
+
+  submitNewFolder(e) {
+    e.preventDefault();
+    console.log('this.state.newFolder:', this.state.newFolder);
+
+    // Create the new folder in the database.
+    db.post({
+      type: 'folder',
+      name: this.state.newFolder
+    }).then((response) => {
+      this.setState({newFolder: '', showNewFolder: false});
+    }).catch((err) => {
+    });
   }
 
   render() {
+    let newFolder = (
+      <form onSubmit={this.submitNewFolder.bind(this)} className="new-folder">
+        <input type="text"
+               name="folder_name"
+               placeholder="Folder Name"
+               onChange={(e) => {this.setState({newFolder: e.target.value})} }
+               value={this.state.newFolder} />
+      </form>);
+
     return (
       <div className="container">
         <div className="row">
@@ -48,6 +76,10 @@ class App extends Component {
             <ul className="menu">
               <li><h5>Note Pila!</h5></li>
               <li>Add Note</li>
+              <li>
+                <span onClick={ () => {this.setState({showNewFolder: !this.state.showNewFolder})} }>Add Folder</span>
+                {this.state.showNewFolder ? newFolder : ''}
+              </li>
             </ul>
           </div>
         </div>

@@ -13,4 +13,13 @@ body {
 .menu li {
   display: inline;
   padding: 0 1em;
+  cursor: pointer;
+}
+
+.new-folder {
+  display: inline-block;
+  margin-left: 10px;
+}
+.new-folder input {
+  padding: 5px;
 }
