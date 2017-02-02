@@ -1,8 +1,10 @@
 import { LIST_FOLDERS, UPDATE_FOLDER, SELECT_FOLDER, ADD_FOLDER, DELETE_FOLDER } from '../actions/folder_actions';
+import { listNotes } from '../actions/note_actions';
 
 export default function(state = [], action) {
   switch (action.type) {
     case LIST_FOLDERS:
+      listNotes(action.payload._id);
       return {docs: action.payload};
     case UPDATE_FOLDER:
       const updatedDocs = state.docs.map((folder) => {

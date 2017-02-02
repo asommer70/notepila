@@ -20,7 +20,7 @@ if (process.env.NODE_ENV == 'production') {
 
 const config = {
   entry: {
-    bundle: './src/app.js',
+    bundle: './src/index.js',
     vendor: VENDOR_LIBS
   },
   output: {

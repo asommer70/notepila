@@ -2,25 +2,41 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 
-import { listNotes } from '../actions/note_actions';
+import { listNotes, selectNote } from '../actions/note_actions';
 
 class Notes extends Component {
   constructor(props) {
     super(props);
 
-    console.log('Notes props:', props);
+    this.props.listNotes(this.props.folderId);
+  }
 
-    this.state = {
-      notes: {}
-    }
-
+  submitNewNote(e) {
+    e.preventDefault();
   }
 
   render() {
+    if (!this.props.notes) {
+      return <p>No notes, yet...</p>;
+    }
+
     return (
       <div>
         <h2>Notes</h2>
-        <p>I think it's working...</p>
+        <ul>
+          {
+            this.props.notes.map((note) => {
+              return (
+                <li key={note.id}>
+                  <div onClick={() => this.props.selectNote(note)}>
+                    {note.key.title}
+                  </div>
+                </li>
+              );
+            })
+          }
+        </ul>
+        <p>{this.props.folder ? this.props.folder.name : ''}</p>
       </div>
     )
   }
@@ -32,7 +48,8 @@ const mapStateToProps = (state) => {
 
 function mapDispatchToProps(dispatch) {
   return bindActionCreators({
-    listNotes: listNotes,
+    listNotes,
+    selectNote
   }, dispatch);
 }
 
