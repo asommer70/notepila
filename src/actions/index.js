@@ -14,9 +14,22 @@ export const REMOVE_NOTE = 'remove_note';
 export const EDIT_NOTE = 'edit_note';
 
 export const selectFolder = (folder) => {
-  return {
-    type: SELECT_FOLDER,
-    payload: folder.doc
+  if (folder.doc) {
+    return {
+      type: SELECT_FOLDER,
+      payload: folder.doc
+    }
+  } else {
+    console.log('SELECT_FOLDER folder:', folder);
+    const query = db.get(folder).then((doc) => {
+      console.log('SELECT_FOLDER res:', doc);
+      return doc;
+    }).catch((err) => {});
+
+    return {
+      type: SELECT_FOLDER,
+      payload: query
+    }
   }
 }
 
@@ -59,6 +72,29 @@ export function addFolder(name) {
     });
   }).catch((err) => {
   });
+
+  return {
+    type: LIST_FOLDERS,
+    payload: query
+  }
+}
+
+export function editFolder(folder, name) {
+  // Update the folder in the database.
+  const query = db.put({
+    _id: folder._id,
+    _rev: folder._rev,
+    name: name,
+    type: 'folder'
+  }).then((response) => {
+    return db.get(response.id).then((doc) => {
+      return {doc: doc, updated: doc._id};
+    });
+  }).catch((err) => {
+    console.log('editFolder err:', err);
+  });
+
+  // listFolders();
 
   return {
     type: LIST_FOLDERS,

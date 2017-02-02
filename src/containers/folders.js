@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 
+import Folder from './folder';
 import { listFolders, selectFolder, addFolder } from '../actions';
 
 class Folders extends Component {
@@ -9,6 +10,7 @@ class Folders extends Component {
     super(props);
 
     this.props.listFolders();
+    console.log('Folders props:', props);
 
     this.state = {
       showNewFolder: false,
@@ -45,12 +47,16 @@ class Folders extends Component {
           {this.state.showNewFolder ? newFolder : ''}
         </div>
 
+        <Folder />
+
         <ul className="folders">
           {
-            this.props.folders.map((folder) => {
+            this.props.folders.map((folder, idx) => {
               return (
                 <li key={folder.doc._id} onClick={() => this.props.selectFolder(folder)}>
-                  {folder.doc.name}
+                  <div>
+                    {folder.doc.name}
+                  </div>
                 </li>
               )
             })

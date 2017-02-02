@@ -11,7 +11,6 @@ import './css/main.css';
 
 import reducers from './reducers';
 import Folders from './containers/folders';
-import Folder from './containers/folder';
 import Notes from './containers/notes';
 
 const createStoreWithMiddleware = applyMiddleware(ReduxPromise)(createStore);
@@ -31,7 +30,6 @@ class App extends Component {
         <div className="row">
           <div className="col-2">
             <Folders />
-            <Folder />
           </div>
           <div className="col-4">
             <Notes />

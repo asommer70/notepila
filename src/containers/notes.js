@@ -8,8 +8,6 @@ export default class Notes extends Component {
       notes: {}
     }
 
-    // Get notes from PouchDB.
-    console.log('Getting data... and stuf!');
   }
 
   render() {
