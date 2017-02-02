@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
-import { editFolder, selectFolder } from '../actions';
+import { selectFolder, editFolder, deleteFolder } from '../actions';
 
 class Folder extends Component {
   constructor(props) {
@@ -13,13 +13,26 @@ class Folder extends Component {
     }
   }
 
+  editFolder(e) {
+    e.preventDefault();
+    if (this.props.folder._id != 'main') {
+      this.setState({editFolder: !this.state.editFolder, editFolderName: this.props.folder.name});
+    }
+  }
+
   updateFolder(e) {
     e.preventDefault();
-
-    // Call an Action method to set an editActiveFolder property on the application state and display a form under the Selected Folder.
     this.props.editFolder(this.props.folder, this.state.editFolderName);
     this.setState({editFolder: false, editFolderName: ''});
     this.props.selectFolder(this.props.folder._id);
+  }
+
+  deleteFolder(e) {
+    e.preventDefault();
+    this.props.deleteFolder(this.props.folder);
+    this.setState({editFolder: false, editFolderName: ''});
+
+    // Select the Main folder.
   }
 
   render() {
@@ -33,10 +46,12 @@ class Folder extends Component {
                name="folder_name"
                onChange={(e) => {this.setState({editFolderName: e.target.value})} }
                value={this.state.editFolderName} />
+
+        <button onClick={this.deleteFolder.bind(this)}>Delete Folder</button>
       </form>);
 
     let folderName = (
-      <div onDoubleClick={() => this.setState({editFolder: !this.state.editFolder, editFolderName: this.props.folder.name})}>
+      <div onDoubleClick={this.editFolder.bind(this)}>
         {this.props.folder.name}
       </div>
     )
@@ -59,8 +74,9 @@ function mapStateToProps(state) {
 
 function mapDispatchToProps(dispatch) {
   return bindActionCreators({
-    editFolder: editFolder,
-    selectFolder: selectFolder,
+    selectFolder,
+    editFolder,
+    deleteFolder
   }, dispatch);
 }
 

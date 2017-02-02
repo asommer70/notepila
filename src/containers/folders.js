@@ -10,7 +10,6 @@ class Folders extends Component {
     super(props);
 
     this.props.listFolders();
-    console.log('Folders props:', props);
 
     this.state = {
       showNewFolder: false,
@@ -25,8 +24,14 @@ class Folders extends Component {
   }
 
   render() {
+    console.log('this.props.folders:', this.props.folders);
     if (!this.props.folders) {
       return <p>No folders in the database...</p>;
+    }
+
+    // If the database is clean there won't be any folders to map so refresh to pickup the new Main folder.
+    if (this.props.folders.type !== undefined) {
+      window.location.reload();
     }
 
     let newFolder = (

@@ -3,7 +3,6 @@ import ReactDOM from 'react-dom';
 import { Provider } from 'react-redux';
 import { createStore, applyMiddleware } from 'redux';
 import PouchDB from 'pouchdb';
-// import { persistentStore } from 'redux-pouchdb';
 import ReduxPromise from 'redux-promise';
 
 import './css/simple-grid.css';
