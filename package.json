@@ -26,7 +26,8 @@
     "react-redux": "^5.0.2",
     "redux": "^3.6.0",
     "redux-pouchdb": "^0.1.1",
-    "redux-promise": "^0.5.3"
+    "redux-promise": "^0.5.3",
+    "slugify": "^1.1.0"
   },
   "devDependencies": {
     "babel-core": "^6.22.1",

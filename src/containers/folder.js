@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
-import { selectFolder, editFolder, deleteFolder } from '../actions';
+import { selectFolder, updateFolder, deleteFolder } from '../actions/folder_actions';
 
 class Folder extends Component {
   constructor(props) {
@@ -22,7 +22,7 @@ class Folder extends Component {
 
   updateFolder(e) {
     e.preventDefault();
-    this.props.editFolder(this.props.folder, this.state.editFolderName);
+    this.props.updateFolder(this.props.folder, this.state.editFolderName);
     this.setState({editFolder: false, editFolderName: ''});
     this.props.selectFolder(this.props.folder._id);
   }
@@ -33,6 +33,7 @@ class Folder extends Component {
     this.setState({editFolder: false, editFolderName: ''});
 
     // Select the Main folder.
+    this.props.selectFolder('main');
   }
 
   render() {
@@ -47,7 +48,7 @@ class Folder extends Component {
                onChange={(e) => {this.setState({editFolderName: e.target.value})} }
                value={this.state.editFolderName} />
 
-        <button onClick={this.deleteFolder.bind(this)}>Delete Folder</button>
+             <span onClick={this.deleteFolder.bind(this)}>Delete Folder</span>
       </form>);
 
     let folderName = (
@@ -66,18 +67,12 @@ class Folder extends Component {
   }
 }
 
-function mapStateToProps(state) {
-  return {
-    folder: state.activeFolder,
-  }
-}
-
 function mapDispatchToProps(dispatch) {
   return bindActionCreators({
     selectFolder,
-    editFolder,
+    updateFolder,
     deleteFolder
   }, dispatch);
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(Folder);
+export default connect(null, mapDispatchToProps)(Folder);

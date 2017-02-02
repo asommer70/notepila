@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 
 import Folder from './folder';
-import { listFolders, selectFolder, addFolder } from '../actions';
+import { listFolders, selectFolder, addFolder } from '../actions/folder_actions';
 
 class Folders extends Component {
   constructor(props) {
@@ -24,7 +24,6 @@ class Folders extends Component {
   }
 
   render() {
-    console.log('this.props.folders:', this.props.folders);
     if (!this.props.folders) {
       return <p>No folders in the database...</p>;
     }
@@ -52,7 +51,7 @@ class Folders extends Component {
           {this.state.showNewFolder ? newFolder : ''}
         </div>
 
-        <Folder />
+        <Folder folder={this.props.active} />
 
         <ul className="folders">
           {
@@ -73,7 +72,7 @@ class Folders extends Component {
 }
 
 const mapStateToProps = (state) => {
-  return { folders: state.folders };
+  return { folders: state.folders.docs, active: state.folders.active };
 }
 
 function mapDispatchToProps(dispatch) {
