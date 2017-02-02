@@ -1,7 +1,7 @@
 import { combineReducers } from 'redux';
 
-import FoldersReducer from './folder_reducer';
-// import ActiveFolderReducer from './active_folder_reducer';
+import FolderReducer from './folder_reducer';
+import NoteReducer from './note_reducer';
 
 // List of Folders
 // Current Folder
@@ -9,7 +9,8 @@ import FoldersReducer from './folder_reducer';
 // Current Note
 
 const rootReducer = combineReducers({
-  folders: FoldersReducer,
+  folders: FolderReducer,
+  notes: NoteReducer
 });
 
 export default rootReducer;
