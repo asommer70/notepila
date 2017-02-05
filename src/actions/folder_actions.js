@@ -1,5 +1,5 @@
 import slugify from 'slugify';
-import { db } from './index';
+import { db, addDesignDoc } from './index';
 
 import { listNotes, LIST_NOTES } from './note_actions';
 
@@ -8,6 +8,27 @@ export const SELECT_FOLDER = 'select_folder';
 export const ADD_FOLDER = 'add_folder';
 export const DELETE_FOLDER = 'remove_folder';
 export const UPDATE_FOLDER = 'update_folder';
+
+export function listFolders() {
+  const query = db.query('folders/index', {
+    include_docs: true,
+  })
+
+  return (dispatch) => {
+    query.then((data) => {
+      console.log('listFolders data:', data);
+      dispatch({
+        type: LIST_FOLDERS,
+        payload: data.rows
+      });
+    }).catch((err) => {
+      console.log('folders/index err:', err);
+      if (err.name == 'not_found') {
+        addDesignDoc();
+      }
+    })
+  }
+}
 
 export const selectFolder = (folder) => {
   return (dispatch) => {
@@ -44,79 +65,6 @@ export const selectFolder = (folder) => {
       })
     })
   }
-}
-
-export function listFolders() {
-  // const query = db.query('folders/index', {
-  //   include_docs: true,
-  // }).then((res) => {
-  //   if (res.rows.length == 0) {
-  //     // Create Main if it's not there.
-  //     return db.put({
-  //       _id: 'main',
-  //       type: 'folder',
-  //       name: 'Main'
-  //     }).then((response) => {
-  //       return db.get(response.id).then((doc) => {
-  //         return doc;
-  //       });
-  //     }).catch((err) => {
-  //       console.log('post main err:', err);
-  //     });
-  //   } else {
-  //     return res.rows;
-  //   }
-  // }).catch((err) => {
-  //   const ddoc = {
-  //     _id: '_design/folders',
-  //     views: {
-  //       index: {
-  //         map: function mapFun(doc) {
-  //           if (doc.type == 'folder') {
-  //             emit(doc._id);
-  //           }
-  //         }.toString()
-  //       },
-  //       notes: {
-  //         map: function mapFun(doc) {
-  //           if (doc.type == 'note') {
-  //             emit(doc.folder);
-  //           }
-  //         }
-  //       }
-  //     }
-  //   }
-  //
-  //   // Save the _design/folders view to the database.
-  //   return db.put(ddoc).catch((err) => {
-  //     if (err.name !== 'conflict') {
-  //       throw err;
-  //     }
-  //   }).then((res) => {
-  //     return listFolders();
-  //   }).catch((err) => {
-  //     console.log('put ddoc err:', err);
-  //   });
-  // });
-
-  const query = db.query('folders/index', {
-    include_docs: true,
-  })
-
-  return (dispatch) => {
-    query.then((data) => {
-      console.log('listFolders data:', data);
-      dispatch({
-        type: LIST_FOLDERS,
-        payload: data.rows
-      })
-    })
-  }
-
-  // return {
-  //   type: LIST_FOLDERS,
-  //   payload: query
-  // }
 }
 
 export function addFolder(name) {

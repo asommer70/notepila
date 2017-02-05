@@ -9,7 +9,7 @@ export const REMOVE_NOTE = 'remove_note';
 export const UPDATE_NOTE = 'update_note';
 
 export function listNotes(folder) {
-  const query = db.query('folders/notes', {
+  const query = db.query('notes/index', {
     key: folder,
     include_docs: true,
   })

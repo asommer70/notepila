@@ -8,7 +8,7 @@ class Note extends Component {
   constructor(props) {
     super(props);
 
-    console.log('Note props:', props);
+    // console.log('Note props:', props);
 
     if (props.note) {
       this.state = {
