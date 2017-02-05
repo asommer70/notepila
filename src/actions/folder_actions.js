@@ -52,7 +52,7 @@ export const selectFolder = (folder) => {
       folder = {id: folder};
     }
 
-    const notesQuery = db.query('folders/notes', {
+    const notesQuery = db.query('notes/index', {
       key: folder.id,
       include_docs: true,
     })

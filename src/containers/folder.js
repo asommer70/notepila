@@ -46,9 +46,12 @@ class Folder extends Component {
         <input type="text"
                name="folder_name"
                onChange={(e) => {this.setState({editFolderName: e.target.value})} }
-               value={this.state.editFolderName} />
+               value={this.state.editFolderName}
+        />
 
-             <span onClick={this.deleteFolder.bind(this)}>Delete Folder</span>
+      <strong><span onClick={ () => this.setState({editFolder: false, editFolderName: ''}) }>Cancel</span></strong>
+        &nbsp;&nbsp;
+        <span onClick={this.deleteFolder.bind(this)}>Delete Folder</span>
       </form>);
 
     let folderName = (
