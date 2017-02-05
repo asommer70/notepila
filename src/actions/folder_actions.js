@@ -10,38 +10,34 @@ export const DELETE_FOLDER = 'remove_folder';
 export const UPDATE_FOLDER = 'update_folder';
 
 export const selectFolder = (folder) => {
-  // if (folder.doc) {
-  //   // listNotes(folder.doc._id);
-  //   return {
-  //     type: SELECT_FOLDER,
-  //     payload: folder.doc
-  //   }
-  // } else {
-  //   // listNotes(folder);
-  //   const query = db.get(folder).then((doc) => {
-  //     return doc;
-  //   }).catch((err) => {});
-  //
-  //   return {
-  //     type: SELECT_FOLDER,
-  //     payload: query
-  //   }
-  // }
-
-  const query = db.query('folders/notes', {
-    key: folder.id,
-    include_docs: true,
-  })
-
   return (dispatch) => {
-    console.log('SELECT_FOLDER folder.doc:', folder.doc);
-    dispatch({
-      type: SELECT_FOLDER,
-      payload: folder.doc
-    });
+    if (!folder.doc) {
+      // Set main as active Folder.
+      db.get(folder).then((doc) => {
+        dispatch({
+          type: SELECT_FOLDER,
+          payload: doc
+        });
+      });
+    } else {
+      dispatch({
+        type: SELECT_FOLDER,
+        payload: folder.doc
+      });
+    }
 
-    query.then((data) => {
-      console.log('listNotes data:', data);
+    // Handle Folder being deleted.
+    if (!folder.id) {
+      folder = {id: folder};
+    }
+
+    const notesQuery = db.query('folders/notes', {
+      key: folder.id,
+      include_docs: true,
+    })
+
+    // Get the Notes for the selected Folder.
+    notesQuery.then((data) => {
       dispatch({
         type: LIST_NOTES,
         payload: data.rows
@@ -129,16 +125,17 @@ export function addFolder(name) {
     _id: slugify(name),
     type: 'folder',
     name: name
-  }).then((response) => {
-    return db.get(response.id).then((doc) => {
-      return {doc, added: doc._id};
-    });
-  }).catch((err) => {
   });
 
-  return {
-    type: ADD_FOLDER,
-    payload: query
+  return (dispatch) => {
+    query.then((data) => {
+      return db.get(data.id).then((doc) => {
+        dispatch({
+          type: ADD_FOLDER,
+          payload: {doc, added: doc._id}
+        })
+      });
+    })
   }
 }
 
@@ -151,28 +148,30 @@ export function updateFolder(folder, name) {
     type: 'folder'
   };
 
-  const query = db.put(updated).then((response) => {
-    return db.get(response.id).then((doc) => {
-      return {doc: doc, updated: doc._id};
-    });
-  }).catch((err) => {
-    console.log('editFolder err:', err);
-  });
+  const query = db.put(updated);
 
-  // listFolders();
-
-  return {
-    type: UPDATE_FOLDER,
-    payload: query
+  return (dispatch) => {
+    query.then((data) => {
+      return db.get(data.id).then((doc) => {
+        console.log('updateFolder doc:', doc);
+        dispatch({
+          type: UPDATE_FOLDER,
+          payload: {doc: doc, updated: doc._id}
+        });
+      });
+    })
   }
 }
 
 export function deleteFolder(folder) {
-  const query = db.remove(folder).then((res) => {
-    return {res: res, deleted: res.id};
-  })
-  return {
-    type: DELETE_FOLDER,
-    payload: query
+  const query = db.remove(folder);
+
+  return (dispatch) => {
+    query.then((data) => {
+      dispatch({
+        type: DELETE_FOLDER,
+        payload: {data: data, deleted: data.id}
+      })
+    })
   }
 }
