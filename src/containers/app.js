@@ -30,7 +30,7 @@ class App extends Component {
           </div>
           <div className="col-6">
             <Note
-              
+
               folderId={this.props.folders.active ? this.props.folders.active._id : 'main'}
             />
           </div>

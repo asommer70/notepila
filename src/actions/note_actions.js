@@ -8,16 +8,36 @@ export const ADD_NOTE = 'add_note';
 export const REMOVE_NOTE = 'remove_note';
 export const UPDATE_NOTE = 'update_note';
 
-export function listNotes(folder='main') {
-  const query = db.query(function(doc, emit) {
-    if (doc.folder === folder) {
-      emit(doc);
-    }
-  }).then(function (res) {
-    return res.rows;
-  }).catch(function (err) {
-    console.log('listNotes query err:', err);
-  });
+export function listNotes(folder) {
+  console.log('listNotes folder:', folder);
+  // const query = db.query((doc, emit) => {
+  //   if (doc.folder === folder) {
+  //     emit(doc._id);
+  //   }
+  // }, {include_docs : true}).then(function (res) {
+  //   console.log('listNotes res:', res);
+  //   return res.rows;
+  // }).catch(function (err) {
+  //   console.log('listNotes query err:', err);
+  // });
+
+  console.log('listNotes folder:', folder);
+
+  const query = db.query('folders/notes', {
+    key: folder,
+    include_docs: true,
+  }).then((res) => {
+    console.log('listNotes res:', res);
+    return res;
+  }).catch((err) => {
+    console.log('listNotes err:', err);
+  })
+
+  // return (dispatch) => {
+  //   query.then(({}) => {
+  //
+  //   })
+  // }
 
   return {
     type: LIST_NOTES,

@@ -4,7 +4,6 @@ import { listNotes } from '../actions/note_actions';
 export default function(state = [], action) {
   switch (action.type) {
     case LIST_FOLDERS:
-      listNotes(action.payload._id);
       return {docs: action.payload};
     case UPDATE_FOLDER:
       const updatedDocs = state.docs.map((folder) => {
@@ -26,6 +25,9 @@ export default function(state = [], action) {
       });
       return {...state, docs: delDocs};
     case SELECT_FOLDER:
+      // console.log('SELECT_FOLDER state:', state);
+      // const notes = listNotes(action.payload._id);
+      // console.log('SELECT_FOLDER notes:', notes);
       return {...state, active: action.payload};
     default:
       return state;

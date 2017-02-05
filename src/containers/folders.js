@@ -4,6 +4,7 @@ import { bindActionCreators } from 'redux';
 
 import Folder from './folder';
 import { listFolders, selectFolder, addFolder } from '../actions/folder_actions';
+import { listNotes } from '../actions/note_actions';
 
 class Folders extends Component {
   constructor(props) {
@@ -57,7 +58,7 @@ class Folders extends Component {
           {
             this.props.folders.map((folder, idx) => {
               return (
-                <li key={folder.doc._id} onClick={() => this.props.selectFolder(folder)}>
+                <li key={folder.doc._id} onClick={() => {this.props.selectFolder(folder); }}>
                   <div>
                     {folder.doc.name}
                   </div>
@@ -79,7 +80,8 @@ function mapDispatchToProps(dispatch) {
   return bindActionCreators({
     listFolders: listFolders,
     selectFolder: selectFolder,
-    addFolder: addFolder
+    addFolder: addFolder,
+    listNotes: listNotes
   }, dispatch);
 }
 

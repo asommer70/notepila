@@ -29,7 +29,7 @@ class Notes extends Component {
               return (
                 <li key={note.id}>
                   <div onClick={() => this.props.selectNote(note)}>
-                    {note.key.title}
+                    {note.doc.title}
                   </div>
                 </li>
               );
@@ -43,6 +43,7 @@ class Notes extends Component {
 }
 
 const mapStateToProps = (state) => {
+  // console.log('Notes mapStateToProps state:', state);
   return { notes: state.notes.docs, active: state.notes.active };
 }
 

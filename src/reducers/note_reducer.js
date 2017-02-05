@@ -4,7 +4,7 @@ export default function(state = [], action) {
   switch (action.type) {
     case LIST_NOTES:
       console.log('LIST_NOTES state:', state, 'action:', action);
-      return {docs: action.payload};
+      return {docs: action.payload.rows};
     case UPDATE_NOTE:
       const updatedDocs = state.docs.map((folder) => {
         if (folder.id == action.payload.updated) {

@@ -12,12 +12,12 @@ class Note extends Component {
 
     if (props.note) {
       this.state = {
-        _id: props.note.key._id,
-        _rev: props.note.key._rev,
-        body: props.note.key.body,
-        title: props.note.key.title,
-        createdAt: props.note.key.createdAt,
-        updatedAt: props.note.key.updatedAt
+        _id: props.note.doc._id,
+        _rev: props.note.doc._rev,
+        body: props.note.doc.body,
+        title: props.note.doc.title,
+        createdAt: props.note.doc.createdAt,
+        updatedAt: props.note.doc.updatedAt
       };
     } else {
       this.state = {
