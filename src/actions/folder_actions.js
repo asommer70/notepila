@@ -1,7 +1,7 @@
 import slugify from 'slugify';
 import { db } from './index';
 
-import { listNotes } from './note_actions';
+import { listNotes, LIST_NOTES } from './note_actions';
 
 export const LIST_FOLDERS = 'list_folders';
 export const SELECT_FOLDER = 'select_folder';
@@ -10,22 +10,43 @@ export const DELETE_FOLDER = 'remove_folder';
 export const UPDATE_FOLDER = 'update_folder';
 
 export const selectFolder = (folder) => {
-  if (folder.doc) {
-    // listNotes(folder.doc._id);
-    return {
+  // if (folder.doc) {
+  //   // listNotes(folder.doc._id);
+  //   return {
+  //     type: SELECT_FOLDER,
+  //     payload: folder.doc
+  //   }
+  // } else {
+  //   // listNotes(folder);
+  //   const query = db.get(folder).then((doc) => {
+  //     return doc;
+  //   }).catch((err) => {});
+  //
+  //   return {
+  //     type: SELECT_FOLDER,
+  //     payload: query
+  //   }
+  // }
+
+  const query = db.query('folders/notes', {
+    key: folder.id,
+    include_docs: true,
+  })
+
+  return (dispatch) => {
+    console.log('SELECT_FOLDER folder.doc:', folder.doc);
+    dispatch({
       type: SELECT_FOLDER,
       payload: folder.doc
-    }
-  } else {
-    // listNotes(folder);
-    const query = db.get(folder).then((doc) => {
-      return doc;
-    }).catch((err) => {});
+    });
 
-    return {
-      type: SELECT_FOLDER,
-      payload: query
-    }
+    query.then((data) => {
+      console.log('listNotes data:', data);
+      dispatch({
+        type: LIST_NOTES,
+        payload: data.rows
+      })
+    })
   }
 }
 

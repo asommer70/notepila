@@ -20,29 +20,39 @@ export function listNotes(folder) {
   // }).catch(function (err) {
   //   console.log('listNotes query err:', err);
   // });
-
-  console.log('listNotes folder:', folder);
+  //
+  // console.log('listNotes folder:', folder);
+  //
+  // const query = db.query('folders/notes', {
+  //   key: folder,
+  //   include_docs: true,
+  // }).then((res) => {
+  //   console.log('listNotes res:', res);
+  //   return res;
+  // }).catch((err) => {
+  //   console.log('listNotes err:', err);
+  // })
 
   const query = db.query('folders/notes', {
     key: folder,
     include_docs: true,
-  }).then((res) => {
-    console.log('listNotes res:', res);
-    return res;
-  }).catch((err) => {
-    console.log('listNotes err:', err);
   })
 
-  // return (dispatch) => {
-  //   query.then(({}) => {
-  //
-  //   })
-  // }
-
-  return {
-    type: LIST_NOTES,
-    payload: query
+  return (dispatch) => {
+    query.then((data) => {
+      console.log('listNotes data:', data);
+      dispatch({
+        type: LIST_NOTES,
+        payload: data.rows
+      })
+    })
   }
+
+
+  // return {
+  //   type: LIST_NOTES,
+  //   payload: query
+  // }
 }
 
 export function selectNote(note) {
