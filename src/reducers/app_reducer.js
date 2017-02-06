@@ -33,18 +33,17 @@ export default function(state = [], action) {
       // console.log('LIST_NOTES state:', state, 'action:', action);
       return {...state, notes: action.payload};
     case UPDATE_NOTE:
-      const updatedNotes = state.docs.map((folder) => {
+      const updatedNotes = state.notes.map((folder) => {
         if (folder.id == action.payload.updated) {
           return {doc: action.payload.doc, id: action.payload.updated};
         } else {
           return folder;
         }
       });
-      return {...state, docs: updatedNotes};
+      return {...state, notes: updatedNotes};
     case ADD_NOTE:
-      console.log('ADD_NOTE state:', state, 'action:', action);
-      const addNotes = [...state.docs, {doc: action.payload, id: action.payload._id}];
-      return {...state, docs: addNotes};
+      const addNotes = [...state.notes, {doc: action.payload, id: action.payload._id}];
+      return {...state, notes: addNotes};
     case DELETE_NOTE:
       const delNotes = state.docs.filter((folder) => {
         if (folder.id != action.payload.deleted) {

@@ -35,8 +35,8 @@ class App extends Component {
           </div>
           <div className="col-6">
             <Note
-              noteId={this.props.activeNote ? this.props.activeNote._id : null}
-              folderId={this.props.activeFolder ? this.props.activeFolder._id : 'main'}
+              note={this.props.activeNote !== undefined ? this.props.activeNote : null}
+              folderId={this.props.activeFolder !== undefined ? this.props.activeFolder._id : 'main'}
             />
           </div>
         </div>

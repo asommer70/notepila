@@ -34,16 +34,20 @@ export function selectNote(note) {
   //   payload: note
   // }
 
-  return (dispatch) => {
-    // dispatch({
-    //   type: GET_ACTIVE_NOTE,
-    //   payload: note
-    // });
-
-    dispatch({
-      type: SELECT_NOTE,
-      payload: note
-    });
+  // return (dispatch) => {
+  //   // dispatch({
+  //   //   type: GET_ACTIVE_NOTE,
+  //   //   payload: note
+  //   // });
+  //
+  //   dispatch({
+  //     type: SELECT_NOTE,
+  //     payload: note
+  //   });
+  // }
+  return {
+    type: SELECT_NOTE,
+    payload: note
   }
 }
 
@@ -74,7 +78,7 @@ export function saveNote(note) {
     _id: slugify(note.title),
     title: note.title,
     body: note.body,
-    folder: note.folderId,
+    folder: note.folder,
     type: 'note'
   }
 

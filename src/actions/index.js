@@ -1,9 +1,8 @@
 import PouchDB from 'pouchdb';
+window.PouchDB = PouchDB;
 
 export const db = new PouchDB('notepila');
 // db.destroy();
-
-window.PouchDB = PouchDB;
 
 export const addDesignDoc = () => {
   const folders_ddoc = {
