@@ -8,24 +8,24 @@ export default function(state = [], action) {
       // console.log('LIST_FOLDERS state:', state, 'action:', action);
       return {...state, folders: action.payload};
     case UPDATE_FOLDER:
-      const updatedFolders = state.docs.map((folder) => {
+      const updatedFolders = state.folders.map((folder) => {
         if (folder.id == action.payload.updated) {
           return {doc: action.payload.doc, id: action.payload.updated};
         } else {
           return folder;
         }
       });
-      return {...state, docs: updatedFolders};
+      return {...state, folders: updatedFolders};
     case ADD_FOLDER:
-      const addFolders = [...state.docs, {doc: action.payload.doc, id: action.payload.doc._id}];
-      return {...state, docs: addFolders};
+      const addFolders = [...state.folders, {doc: action.payload.doc, id: action.payload.doc._id}];
+      return {...state, folders: addFolders};
     case DELETE_FOLDER:
-      const delFolders = state.docs.filter((folder) => {
+      const delFolders = state.folders.filter((folder) => {
         if (folder.id != action.payload.deleted) {
           return folder
         }
       });
-      return {...state, docs: delFolders};
+      return {...state, folders: delFolders};
     case SELECT_FOLDER:
       console.log('SELECT_FOLDER state:', state, 'action:', action);
       return {...state, activeFolder: action.payload};
