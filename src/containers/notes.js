@@ -8,6 +8,7 @@ class Notes extends Component {
   constructor(props) {
     super(props);
 
+    // console.log('Notes props:', props);
     this.props.listNotes(this.props.folderId);
   }
 
@@ -44,7 +45,7 @@ class Notes extends Component {
 
 const mapStateToProps = (state) => {
   // console.log('Notes mapStateToProps state:', state);
-  return { notes: state.notes.docs, active: state.notes.active };
+  return { notes: state.app.notes, active: state.app.activeNote };
 }
 
 function mapDispatchToProps(dispatch) {

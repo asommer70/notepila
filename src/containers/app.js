@@ -6,9 +6,14 @@ import Folders from './folders';
 import Notes from './notes';
 import Note from './note';
 
+import { listFolders, selectFolder, addFolder } from '../actions/folder_actions';
+import { listNotes } from '../actions/note_actions';
+
 class App extends Component {
   constructor(props) {
     super(props);
+
+    this.props.listFolders();
   }
 
   render() {
@@ -23,15 +28,15 @@ class App extends Component {
         </div>
         <div className="row">
           <div className="col-2">
-            <Folders />
+            <Folders folders={this.props.folders} activeFolder={this.props.activeFolder} />
           </div>
           <div className="col-4">
-            <Notes folderId={this.props.folders.active ? this.props.folders.active._id : 'main'} />
+            <Notes folderId={this.props.activeFolder ? this.props.activeFolder._id : 'main'} />
           </div>
           <div className="col-6">
             <Note
-
-              folderId={this.props.folders.active ? this.props.folders.active._id : 'main'}
+              noteId={this.props.activeNote ? this.props.activeNote._id : null}
+              folderId={this.props.activeFolder ? this.props.activeFolder._id : 'main'}
             />
           </div>
         </div>
@@ -41,15 +46,22 @@ class App extends Component {
 }
 
 function mapStateToProps(state) {
+  console.log('App mapStateToProps state:', state);
   return {
-    folders: state.folders,
-    notes: state.notes
+    folders: state.app.folders,
+    notes: state.app.notes,
+    activeFolder: state.app.activeFolder,
+    activeNote: state.app.activeNote
   }
 }
 
-// function mapDispatchToProps(dispatch) {
-//   return bindActionCreators({
-//   }, dispatch);
-// }
+function mapDispatchToProps(dispatch) {
+  return bindActionCreators({
+    listFolders: listFolders,
+    selectFolder: selectFolder,
+    addFolder: addFolder,
+    listNotes: listNotes
+  }, dispatch);
+}
 
-export default connect(mapStateToProps)(App);
+export default connect(mapStateToProps, mapDispatchToProps)(App);

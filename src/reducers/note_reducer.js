@@ -1,9 +1,9 @@
-import { LIST_NOTES, UPDATE_NOTE, SELECT_NOTE, ADD_NOTE, DELETE_NOTE } from '../actions/note_actions';
+import { LIST_NOTES, UPDATE_NOTE, SELECT_NOTE, ADD_NOTE, DELETE_NOTE, SELECT_FOLDER, GET_ACTIVE_NOTE } from '../actions/note_actions';
 
 export default function(state = [], action) {
   switch (action.type) {
     case LIST_NOTES:
-      console.log('LIST_NOTES state:', state, 'action:', action);
+      // console.log('LIST_NOTES state:', state, 'action:', action);
       return {docs: action.payload};
     case UPDATE_NOTE:
       const updatedDocs = state.docs.map((folder) => {
@@ -27,6 +27,13 @@ export default function(state = [], action) {
       return {...state, docs: delDocs};
     case SELECT_NOTE:
       console.log('SELECT_NOTE state:', state, 'action:', action);
+      return {...state, active: action.payload};
+    case GET_ACTIVE_NOTE:
+      console.log('SELECT_NOTE state:', state, 'action:', action);
+      return {...state, active: action.payload};
+      // return action.payload
+    case SELECT_FOLDER:
+      console.log('NOTE_REDUCER SELECT_FOLDER state:', state, 'action:', action);
       return {...state, active: action.payload};
     default:
       return state;

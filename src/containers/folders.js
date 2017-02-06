@@ -10,7 +10,8 @@ class Folders extends Component {
   constructor(props) {
     super(props);
 
-    this.props.listFolders();
+    // this.props.listFolders();
+    console.log('Folders props:', props);
 
     this.state = {
       showNewFolder: false,
@@ -43,6 +44,7 @@ class Folders extends Component {
                value={this.state.newFolder} />
       </form>);
 
+    console.log('Folders this.props:', this.props);
     return (
       <div>
         <h2>Folders</h2>
@@ -52,7 +54,7 @@ class Folders extends Component {
           {this.state.showNewFolder ? newFolder : ''}
         </div>
 
-        <Folder folder={this.props.active} />
+        <Folder folder={this.props.activeFolder} />
 
         <ul className="folders">
           {
@@ -73,7 +75,11 @@ class Folders extends Component {
 }
 
 const mapStateToProps = (state) => {
-  return { folders: state.folders.docs, active: state.folders.active };
+  console.log('Folders mapStateToProps state:', state);
+  return {
+    folders: state.app.folders,
+    activeFolder: state.app.activeFolder,
+  };
 }
 
 function mapDispatchToProps(dispatch) {
@@ -85,4 +91,5 @@ function mapDispatchToProps(dispatch) {
   }, dispatch);
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(Folders);
+export default connect(null, mapDispatchToProps)(Folders);
+// export default Folders;

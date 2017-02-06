@@ -7,6 +7,8 @@ export const SELECT_NOTE = 'select_note';
 export const ADD_NOTE = 'add_note';
 export const REMOVE_NOTE = 'remove_note';
 export const UPDATE_NOTE = 'update_note';
+// export const SELECT_FOLDER = 'select_folder';
+export const GET_ACTIVE_NOTE = 'get_active_note';
 
 export function listNotes(folder) {
   const query = db.query('notes/index', {
@@ -16,7 +18,7 @@ export function listNotes(folder) {
 
   return (dispatch) => {
     query.then((data) => {
-      console.log('listNotes data:', data);
+      // console.log('listNotes data:', data);
       dispatch({
         type: LIST_NOTES,
         payload: data.rows
@@ -26,9 +28,44 @@ export function listNotes(folder) {
 }
 
 export function selectNote(note) {
+  console.log('selectNote note:', note.doc);
+  // return {
+  //   type: SELECT_NOTE,
+  //   payload: note
+  // }
+
+  return (dispatch) => {
+    // dispatch({
+    //   type: GET_ACTIVE_NOTE,
+    //   payload: note
+    // });
+
+    dispatch({
+      type: SELECT_NOTE,
+      payload: note
+    });
+  }
+}
+
+// export function selectFolder(folderId) {
+//   return {
+//     type: SELECT_FOLDER,
+//     payload: folderId
+//   }
+// }
+
+export function getActiveNote(note) {
+  console.log('getActiveNote note:', note);
   return {
-    type: SELECT_NOTE,
+    type: GET_ACTIVE_NOTE,
     payload: note
+  }
+
+  return (dispatch) => {
+    dispatch({
+      type: GET_ACTIVE_NOTE,
+      payload: note
+    });
   }
 }
 
@@ -37,29 +74,31 @@ export function saveNote(note) {
     _id: slugify(note.title),
     title: note.title,
     body: note.body,
-    folder: note.folderId
+    folder: note.folderId,
+    type: 'note'
   }
 
   let type;
-  note.updatedAt = new moment.unix()
-  if (!note._rev) {
-    note.createdAt = new moment.unix();
+  newNote.updatedAt = moment().unix();
+  if (!newNote._rev) {
+    newNote.createdAt = moment().unix();
     type = ADD_NOTE;
   } else {
+    newNote._rev = note._rev;
     type = UPDATE_NOTE;
   }
 
-  const query = db.put(newNote).then((res) => {
-    return db.get(res.id, {include_docs: true}).then((doc) => {
-      console.log('saveNote put doc:', doc);
-      return doc;
-    });
-  }).catch((err) => {
-    console.log('saveNote err:', err);
-  });
+  console.log('saveNote newNote:', newNote);
+  const query = db.put(newNote)
 
-  return {
-    type: type,
-    payload: query
+  return (dispatch) => {
+    query.then((data) => {
+      return db.get(data.id).then((doc) => {
+        dispatch({
+          type: type,
+          payload: doc
+        })
+      });
+    })
   }
 }
