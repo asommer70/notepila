@@ -46,7 +46,7 @@ class App extends Component {
 }
 
 function mapStateToProps(state) {
-  console.log('App mapStateToProps state:', state);
+  // console.log('App mapStateToProps state:', state);
   return {
     folders: state.app.folders,
     notes: state.app.notes,

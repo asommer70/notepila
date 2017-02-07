@@ -2,88 +2,113 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 
-import { saveNote, getActiveNote } from '../actions/note_actions';
+import { saveNote } from '../actions/note_actions';
 import { selectFolder } from '../actions/folder_actions';
 
 class Note extends Component {
   constructor(props) {
     super(props);
 
-    // console.log('Note props:', props);
-
-    if (props.note) {
-      this.state = {
-        _id: props.note.doc._id,
-        _rev: props.note.doc._rev,
-        body: props.note.doc.body,
-        title: props.note.doc.title,
-        folder: props.note.doc.folder,
-        type: props.note.doc.type,
-        createdAt: props.note.doc.createdAt,
-        updatedAt: props.note.doc.updatedAt
-      };
-    } else {
-      this.state = {
-        title: '',
-        body: '',
-      }
+    this.state = {
+      doc: {_id: null, title: '', body: ''},
+      editNote: false,
+      addNote: false
     }
-
-    // if (!this.props.noteId) {
-      // const note = props.getActiveNote();
-      // this.state = {
-      //   note: note
-      // }
-    // }
-
-    // this.props.selectFolder(this.props.folderId);
-    // console.log('Note props:', props, 'this.state:', this.state);
   }
-
-  // componentDidUpdate() {
-  //   if (this.props.note) {
-  //     this.setState({
-  //       _id: this.props.note.doc._id,
-  //       _rev: this.props.note.doc._rev,
-  //       body: this.props.note.doc.body,
-  //       title: this.props.note.doc.title,
-  //       folder: this.props.note.doc.folder,
-  //       type: this.props.note.doc.type,
-  //       createdAt: this.props.note.doc.createdAt,
-  //       updatedAt: this.props.note.doc.updatedAt
-  //     });
-  //   }
-  // }
 
   saveNote(e) {
     e.preventDefault();
-    const note = this.state;
-    note.folder = this.props.folder._id;
-    console.log('Saving note... note:', note);
+    const note = this.state.doc;
+    if (!note.folder || !this.props.folder) {
+      if (this.props.folder) {
+        note.folder = this.props.folder._id;
+      } else {
+        note.folder = 'main';
+      }
+    }
+
     this.props.saveNote(note);
+    this.setState({
+      editNote: false,
+      addNote: false,
+      doc: {_id: null, title: '', body: ''}
+    })
+  }
+
+  editNote() {
+    this.setState({
+      editNote: !this.state.editNote,
+      doc: this.props.note.doc
+    })
+  }
+
+  handleNoteChange(e) {
+    e.preventDefault();
+    const doc = this.state.doc;
+    doc[e.target.name] = e.target.value;
+    this.setState({doc: doc});
+  }
+
+  cancelAction(e) {
+    e.preventDefault();
+
+    if (this.state.editNote) {
+      this.setState({editNote: false, doc: {_id: null, title: '', body: ''}});
+    } else if (this.state.addNote) {
+      this.setState({addNote: false});
+    }
   }
 
   render() {
-    // console.log('this.state.title:', this.state.title, 'this.props.note:', this.props.note);
-
-
-    if (!this.props.note) {
-      return <p>No note selected, yet...</p>
+    let noteAction;
+    if (this.props.note) {
+      noteAction = (
+        <div>
+          <div onClick={() => this.setState({addNote: true})}>
+            Add Note
+          </div>
+          <div onClick={this.editNote.bind(this)}>
+            Edit Note
+          </div>
+        </div>
+      );
+    } else {
+      noteAction = (
+        <div onClick={() => this.setState({addNote: true})}>
+          Add Note
+        </div>
+      );
     }
+
+    const noteForm = (
+      <div>
+        <span onClick={this.cancelAction.bind(this)}>Cancel</span>
+        <br/>
+        <form>
+          <input type="text" name="title" placeholder="Title" value={this.state.doc.title} onChange={this.handleNoteChange.bind(this)} />
+          <br/><br/>
+          <input type="text" name="body" placeholder="Write something..." value={this.state.doc.body} onChange={this.handleNoteChange.bind(this)} />
+          <br/><br/>
+          <button onClick={this.saveNote.bind(this)}>Save</button>
+        </form>
+      </div>
+    );
+
+    const showNote = (
+      <div>
+        {noteAction}
+        <p>{this.props.note ? this.props.note.doc.title : ''}</p>
+        <p>{this.props.note ? this.props.note.doc.body : ''}</p>
+      </div>
+    );
 
     return (
       <div>
         <h2>Note</h2>
-          <p>{this.props.note ? this.props.note.doc.title : ''}</p>
-          <p>{this.props.note ? this.props.note.doc.body : ''}</p>
 
-          <form>
-            <input type="text" name="note_title" placeholder="Title" value={this.state.title} onChange={(e) => this.setState({title: e.target.value})} />
-            <br/><br/>
-            <input type="text" name="note_body" placeholder="Write something..." value={this.state.body} onChange={(e) => this.setState({body: e.target.value})} />
-            <br/><br/>
-            <button onClick={this.saveNote.bind(this)}>Save</button>
-          </form>
+          {this.state.addNote ? noteForm : ''}
+
+          {this.state.editNote ? noteForm : showNote}
       </div>
     )
   }

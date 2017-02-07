@@ -8,7 +8,6 @@ class Notes extends Component {
   constructor(props) {
     super(props);
 
-    // console.log('Notes props:', props);
     this.props.listNotes(this.props.folderId);
   }
 

@@ -16,7 +16,6 @@ export function listFolders() {
 
   return (dispatch) => {
     query.then((data) => {
-      console.log('listFolders data:', data);
       dispatch({
         type: LIST_FOLDERS,
         payload: data.rows
