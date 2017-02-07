@@ -2,8 +2,7 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 
-import { saveNote } from '../actions/note_actions';
-import { selectFolder } from '../actions/folder_actions';
+import { selectNote, saveNote, deleteNote } from '../actions/note_actions';
 
 class Note extends Component {
   constructor(props) {
@@ -59,6 +58,16 @@ class Note extends Component {
     }
   }
 
+  deleteNote(e) {
+    e.preventDefault();
+
+    console.log('deleteNote this.props.note.doc:', this.props.note.doc);
+
+    this.props.deleteNote(this.props.note.doc);
+    this.setState({doc: {_id: null, title: '', body: ''}});
+    this.props.selectNote({doc: this.state.doc});
+  }
+
   render() {
     let noteAction;
     if (this.props.note) {
@@ -69,6 +78,9 @@ class Note extends Component {
           </div>
           <div onClick={this.editNote.bind(this)}>
             Edit Note
+          </div>
+          <div onClick={this.deleteNote.bind(this)}>
+            Delete Note
           </div>
         </div>
       );
@@ -122,6 +134,8 @@ const mapStateToProps = (state) => {
 const mapDispatchToProps = (dispatch) => {
   return bindActionCreators({
     saveNote: saveNote,
+    deleteNote: deleteNote,
+    selectNote: selectNote,
   }, dispatch);
 }
 

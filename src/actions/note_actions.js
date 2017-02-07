@@ -5,7 +5,7 @@ import moment from 'moment';
 export const LIST_NOTES = 'list_notes';
 export const SELECT_NOTE = 'select_note';
 export const ADD_NOTE = 'add_note';
-export const REMOVE_NOTE = 'remove_note';
+export const DELETE_NOTE = 'delete_note';
 export const UPDATE_NOTE = 'update_note';
 
 export function listNotes(folder) {
@@ -63,6 +63,19 @@ export function saveNote(note) {
           payload: doc
         })
       });
+    })
+  }
+}
+
+export function deleteNote(note) {
+  const query = db.remove(note);
+
+  return (dispatch) => {
+    query.then((data) => {
+      dispatch({
+        type: DELETE_NOTE,
+        payload: {data: data, deleted: data.id}
+      })
     })
   }
 }
