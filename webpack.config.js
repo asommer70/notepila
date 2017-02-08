@@ -4,7 +4,7 @@ const ExtractTextPlugin = require('extract-text-webpack-plugin');
 var HtmlWebpackPlugin = require('html-webpack-plugin');
 
 const VENDOR_LIBS = [
-  'react', 'react-dom', 'pouchdb'
+  'react', 'react-dom', 'pouchdb', 'moment', 'draft-js'
 ]
 
 var distPath, indexFilename, cssFilename;
