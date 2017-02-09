@@ -35,12 +35,18 @@ export function selectNote(note) {
 export function saveNote(note) {
   let type;
   let newNote;
+  let bodyRaw = '';
+
+  note.body.blocks.map((block) => {
+    bodyRaw += block.text + "\n";
+  });
 
   if (!note._rev) {
     newNote = {
       _id: slugify(note.title),
       title: note.title,
       body: note.body,
+      bodyRaw: bodyRaw,
       folder: note.folder,
       type: 'note',
       createdAt: moment().unix(),
@@ -49,10 +55,12 @@ export function saveNote(note) {
     type = ADD_NOTE;
   } else {
     newNote = note;
+    newNote.bodyRaw = bodyRaw;
     newNote.updatedAt = moment().unix();
     type = UPDATE_NOTE;
   }
 
+  console.log('newNote:', newNote);
   const query = db.put(newNote)
 
   return (dispatch) => {
@@ -80,6 +88,28 @@ export function deleteNote(note) {
       dispatch({
         type: SELECT_NOTE,
         payload: undefined
+      });
+    })
+  }
+}
+
+export function search(term) {
+  const query = db.search({
+    query: term,
+    fields: ['title', 'bodyRaw'],
+    include_docs: true,
+    filter: (doc) => {
+      return doc.type === 'note';
+    },
+    mm: '33%'
+  });
+
+  return (dispatch) => {
+    query.then((data) => {
+
+      dispatch({
+        type: LIST_NOTES,
+        payload: data.rows
       });
     })
   }

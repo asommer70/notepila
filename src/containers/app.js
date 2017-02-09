@@ -7,7 +7,7 @@ import Notes from './notes';
 import Note from './note';
 
 import { listFolders, selectFolder, addFolder } from '../actions/folder_actions';
-import { listNotes } from '../actions/note_actions';
+import { listNotes, search } from '../actions/note_actions';
 
 class App extends Component {
   constructor(props) {
@@ -16,13 +16,23 @@ class App extends Component {
     this.props.listFolders();
   }
 
+  search(e) {
+    e.preventDefault();
+    this.props.search(this.input.value);
+  }
+
   render() {
     return (
       <div className="container">
         <div className="row">
-          <div className="col-12">
+          <div className="col-9">
             <ul className="menu">
               <li><h5>Note Pila!</h5></li>
+              <li>
+                <form onSubmit={this.search.bind(this)}>
+                  <input type="text" name="search" placeholder="Search..." ref={(input) => this.input = input} />
+                </form>
+              </li>
             </ul>
           </div>
         </div>
@@ -60,7 +70,8 @@ function mapDispatchToProps(dispatch) {
     listFolders: listFolders,
     selectFolder: selectFolder,
     addFolder: addFolder,
-    listNotes: listNotes
+    listNotes: listNotes,
+    search: search
   }, dispatch);
 }
 

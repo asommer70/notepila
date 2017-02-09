@@ -23,7 +23,11 @@ class Note extends Component {
   }
 
   componentWillReceiveProps(nextProps) {
-    this.setState({doc: nextProps.note.doc, addNote: false});
+    if (nextProps.note) {
+      this.setState({doc: nextProps.note.doc, addNote: false});
+    } else {
+      this.setState({addNote: false});
+    }
   }
 
   editTitle(e) {
@@ -32,7 +36,7 @@ class Note extends Component {
     note.title = e.target.value;
     this.setState({doc: note});
   }
-  
+
   render() {
     const noteForm = (
       <div>

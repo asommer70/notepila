@@ -1,4 +1,5 @@
 import PouchDB from 'pouchdb';
+PouchDB.plugin(require('pouchdb-quick-search'));
 window.PouchDB = PouchDB;
 
 export const db = new PouchDB('notepila');
