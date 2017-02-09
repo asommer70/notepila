@@ -67,7 +67,6 @@ class Edity extends Component {
 
     note.folder = this.props.folder ? this.props.folder._id : 'main';
     note.body = convertToRaw(this.state.editorState.getCurrentContent());
-    console.log('saveEdit note:', note);
     this.props.saveNote(note);
   }
 

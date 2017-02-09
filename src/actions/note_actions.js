@@ -77,7 +77,12 @@ export function deleteNote(note) {
       dispatch({
         type: DELETE_NOTE,
         payload: {data: data, deleted: data.id}
-      })
+      });
+
+      dispatch({
+        type: SELECT_NOTE,
+        payload: undefined
+      });
     })
   }
 }
