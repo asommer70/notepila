@@ -117,7 +117,7 @@ class Note extends Component {
 
     const noteForm = (
       <div>
-        <Edity note={this.state.doc} />
+        <Edity note={this.state.doc} addNote={this.state.addNote} folder={this.props.folder} />
       </div>
     )
 
@@ -145,8 +145,14 @@ class Note extends Component {
 
     return (
       <div>
-          <h3>{this.props.note ? this.props.note.doc.title : ''}</h3>
-          {this.props.note ? noteForm : ''}
+        <div onClick={() => this.setState({addNote: !this.state.addNote})}>
+          Add Note
+          <br/>
+        </div>
+        {this.state.addNote ? noteForm : ''}
+
+        <h3>{this.props.note ? this.props.note.doc.title : ''}</h3>
+        {this.props.note ? noteForm : ''}
       </div>
     )
   }
