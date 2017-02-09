@@ -28,7 +28,7 @@ class Edity extends Component {
     return 'not-handled';
   }
 
-  componentDidMount() {
+  componentWillMount() {
     console.log('this.props.note:', this.props.note);
     if (this.props.note) {
       const content = convertFromRaw(this.props.note.doc.body);
@@ -39,7 +39,7 @@ class Edity extends Component {
   componentWillReceiveProps(nextProps) {
     console.log('nextProps;', nextProps);
     if (this.props.note) {
-      const content = convertFromRaw(this.props.note.doc.body);
+      const content = convertFromRaw(nextProps.note.doc.body);
       this.setState({editorState: EditorState.createWithContent(content)});
     }
   }
