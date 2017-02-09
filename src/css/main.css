@@ -32,3 +32,21 @@ body {
 .btn span {
   color: #fafafa;
 }
+
+.btn svg.icon {
+  width: 24px;
+  height: 24px;
+  margin-top: 5px;
+}
+
+.btn.btn-inline.btn-success svg.icon {
+  width: 24px;
+  height: 24px;
+  margin-top: 10px;
+}
+
+.btn.btn-small svg.icon {
+  width: 18px;
+  height: 18px;
+  padding-bottom: 5px;
+}

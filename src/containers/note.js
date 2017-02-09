@@ -4,6 +4,7 @@ import { bindActionCreators } from 'redux';
 
 import { selectNote, saveNote, deleteNote } from '../actions/note_actions';
 import Edity from './edity';
+import Icon from '../components/icon';
 
 class Note extends Component {
   constructor(props) {
@@ -54,7 +55,7 @@ class Note extends Component {
     return (
       <div>
         <div onClick={() => this.setState({addNote: !this.state.addNote})} className="btn btn-inline btn-primary">
-          <span>ADD NOTE</span>
+          <Icon name={'plus'} />
           <br/>
         </div>
 

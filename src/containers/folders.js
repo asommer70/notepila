@@ -5,6 +5,7 @@ import { bindActionCreators } from 'redux';
 import Folder from './folder';
 import { listFolders, selectFolder, addFolder } from '../actions/folder_actions';
 import { listNotes } from '../actions/note_actions';
+import Icon from '../components/icon';
 
 class Folders extends Component {
   constructor(props) {
@@ -47,7 +48,7 @@ class Folders extends Component {
 
         <div>
           <div className="btn btn-inline btn-small btn-primary" onClick={ () => {this.setState({showNewFolder: !this.state.showNewFolder})} }>
-            <span>ADD FOLDER</span>
+            <Icon name={'plus'} />
           </div>
           {this.state.showNewFolder ? newFolder : ''}
         </div>

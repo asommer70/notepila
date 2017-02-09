@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { selectFolder, updateFolder, deleteFolder } from '../actions/folder_actions';
+import Icon from '../components/icon';
 
 class Folder extends Component {
   constructor(props) {
@@ -51,7 +52,7 @@ class Folder extends Component {
 
       <div className="btn btn-inline btn-info" onClick={ () => this.setState({editFolder: false, editFolderName: ''}) }><span>CANCEL</span></div>
         &nbsp;&nbsp;
-        <div className="btn btn-inline btn-small btn-danger" onClick={this.deleteFolder.bind(this)}><span>DELETE</span></div>
+        <div className="btn btn-inline btn-small btn-danger" onClick={this.deleteFolder.bind(this)}><Icon name={'x'} /></div>
       </form>);
 
     let folderName = (

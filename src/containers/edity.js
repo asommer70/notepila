@@ -4,6 +4,7 @@ import { bindActionCreators } from 'redux';
 import { Editor, EditorState, RichUtils, ContentState, convertToRaw, convertFromRaw } from 'draft-js';
 
 import { saveNote, deleteNote } from '../actions/note_actions';
+import Icon from '../components/icon';
 
 class Edity extends Component {
   constructor(props) {
@@ -90,9 +91,9 @@ class Edity extends Component {
           handleKeyCommand={this.handleKeyCommand}
         />
         <br/>
-        <div className="btn btn-inline btn-success" onClick={this.saveEdit.bind(this)}><span>SAVE</span></div> &nbsp;&nbsp;&nbsp;&nbsp;
+        <div className="btn btn-inline btn-success" onClick={this.saveEdit.bind(this)}><Icon name={'check'} /></div> &nbsp;&nbsp;&nbsp;&nbsp;
           {this.props.note && !this.props.addNote
-            ? <div className="btn btn-inline btn-small btn-danger" onClick={() => this.props.deleteNote(this.props.note.doc)}><span>DELETE</span></div>
+            ? <div className="btn btn-inline btn-small btn-danger" onClick={() => this.props.deleteNote(this.props.note.doc)}><Icon name={'x'} /></div>
             : ''}
       </div>
     )
