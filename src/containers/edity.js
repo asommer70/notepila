@@ -29,7 +29,6 @@ class Edity extends Component {
   }
 
   componentWillMount() {
-    console.log('this.props.note:', this.props.note);
     if (this.props.note) {
       const content = convertFromRaw(this.props.note.doc.body);
       this.setState({editorState: EditorState.createWithContent(content)});
@@ -37,17 +36,18 @@ class Edity extends Component {
   }
 
   componentWillReceiveProps(nextProps) {
-    console.log('nextProps;', nextProps);
     if (this.props.note) {
-      const content = convertFromRaw(nextProps.note.doc.body);
-      this.setState({editorState: EditorState.createWithContent(content)});
+      if (nextProps.addNote) {
+        this.setState({editorState: EditorState.createEmpty()});
+      } else {
+        const content = convertFromRaw(nextProps.note.doc.body);
+        this.setState({editorState: EditorState.createWithContent(content)});
+      }
     }
   }
 
   handleTitleChange(e) {
     e.preventDefault();
-    // const doc = this.props.note;
-    // doc[e.target.name] = e.target.value;
     this.setState({title: e.target.value});
   }
 
@@ -55,7 +55,7 @@ class Edity extends Component {
     e.preventDefault();
 
     let note;
-    if (this.props.note) {
+    if (this.props.note && !this.props.addNote) {
       note = this.props.note.doc;
     } else {
       note = {};
@@ -67,6 +67,7 @@ class Edity extends Component {
 
     note.folder = this.props.folder ? this.props.folder._id : 'main';
     note.body = convertToRaw(this.state.editorState.getCurrentContent());
+    console.log('saveEdit note:', note);
     this.props.saveNote(note);
   }
 
@@ -92,7 +93,7 @@ class Edity extends Component {
         />
 
         <span onClick={this.saveEdit.bind(this)}>Save</span> &nbsp;&nbsp;&nbsp;&nbsp;
-        {this.props.note ? <span onClick={() => this.props.deleteNote(this.props.note.doc)}>Delete</span> : ''}
+        {this.props.note && !this.props.addNote ? <span onClick={() => this.props.deleteNote(this.props.note.doc)}>Delete</span> : ''}
       </div>
     )
   }
