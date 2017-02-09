@@ -49,9 +49,9 @@ class Folder extends Component {
                value={this.state.editFolderName}
         />
 
-        <strong><span onClick={ () => this.setState({editFolder: false, editFolderName: ''}) }>Cancel</span></strong>
+      <div className="btn btn-inline btn-info" onClick={ () => this.setState({editFolder: false, editFolderName: ''}) }><span>CANCEL</span></div>
         &nbsp;&nbsp;
-        <span onClick={this.deleteFolder.bind(this)}>Delete Folder</span>
+        <div className="btn btn-inline btn-small btn-danger" onClick={this.deleteFolder.bind(this)}><span>DELETE</span></div>
       </form>);
 
     let folderName = (

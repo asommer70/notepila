@@ -46,7 +46,9 @@ class Folders extends Component {
         <h2>Folders</h2>
 
         <div>
-          <span onClick={ () => {this.setState({showNewFolder: !this.state.showNewFolder})} }>Add Folder</span>
+          <div className="btn btn-inline btn-small btn-primary" onClick={ () => {this.setState({showNewFolder: !this.state.showNewFolder})} }>
+            <span>ADD FOLDER</span>
+          </div>
           {this.state.showNewFolder ? newFolder : ''}
         </div>
 

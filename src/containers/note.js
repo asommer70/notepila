@@ -53,8 +53,8 @@ class Note extends Component {
 
     return (
       <div>
-        <div onClick={() => this.setState({addNote: !this.state.addNote})}>
-          Add Note
+        <div onClick={() => this.setState({addNote: !this.state.addNote})} className="btn btn-inline btn-primary">
+          <span>ADD NOTE</span>
           <br/>
         </div>
 

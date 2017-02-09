@@ -1,6 +1,5 @@
 body {
   background-color: #eeeeee;
-  color: #424242;
 }
 
 .menu {
@@ -28,4 +27,8 @@ body {
 .DraftEditor-root {
   padding: 20px;
   border: 2px solid #424242;
+}
+
+.btn span {
+  color: #fafafa;
 }

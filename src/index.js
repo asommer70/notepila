@@ -7,6 +7,7 @@ import thunk from 'redux-thunk';
 
 import './css/simple-grid.css';
 import './css/main.css';
+import './css/obvious-buttons.css';
 
 import reducers from './reducers';
 import Folders from './containers/folders';

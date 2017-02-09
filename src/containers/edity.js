@@ -16,7 +16,6 @@ class Edity extends Component {
 
     this.onChange = (editorState) => this.setState({editorState});
     this.handleKeyCommand = this.handleKeyCommand.bind(this);
-    // this.saveNote = this.props.saveNote.bind(this);
   }
 
   handleKeyCommand(command) {
@@ -90,9 +89,11 @@ class Edity extends Component {
           onChange={this.onChange}
           handleKeyCommand={this.handleKeyCommand}
         />
-
-        <span onClick={this.saveEdit.bind(this)}>Save</span> &nbsp;&nbsp;&nbsp;&nbsp;
-        {this.props.note && !this.props.addNote ? <span onClick={() => this.props.deleteNote(this.props.note.doc)}>Delete</span> : ''}
+        <br/>
+        <div className="btn btn-inline btn-success" onClick={this.saveEdit.bind(this)}><span>SAVE</span></div> &nbsp;&nbsp;&nbsp;&nbsp;
+          {this.props.note && !this.props.addNote
+            ? <div className="btn btn-inline btn-small btn-danger" onClick={() => this.props.deleteNote(this.props.note.doc)}><span>DELETE</span></div>
+            : ''}
       </div>
     )
   }
