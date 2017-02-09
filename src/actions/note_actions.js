@@ -36,8 +36,6 @@ export function saveNote(note) {
   let type;
   let newNote;
 
-  console.log('saveNote note:', note);
-
   if (!note._rev) {
     newNote = {
       _id: slugify(note.title),

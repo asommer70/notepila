@@ -23,15 +23,29 @@ class Note extends Component {
   }
 
   componentWillReceiveProps(nextProps) {
-    this.setState({addNote: false});
+    this.setState({doc: nextProps.note.doc, addNote: false});
   }
 
+  editTitle(e) {
+    e.preventDefault();
+    const note = this.state.doc;
+    note.title = e.target.value;
+    this.setState({doc: note});
+  }
+  
   render() {
     const noteForm = (
       <div>
         <Edity note={this.state.doc} addNote={this.state.addNote} folder={this.props.folder} />
       </div>
     )
+
+    let titleField;
+    if (this.props.note) {
+      titleField = <input type="text" name="title"
+        value={this.state.doc.title}
+        onChange={this.editTitle.bind(this)} />;
+    }
 
     return (
       <div>
@@ -40,7 +54,9 @@ class Note extends Component {
           <br/>
         </div>
 
-        <h3>{this.props.note && !this.state.addNote ? this.props.note.doc.title : ''}</h3>
+        <h3>
+          {this.props.note && !this.state.addNote ? titleField : ''}
+        </h3>
         {this.props.note || this.state.addNote ? noteForm : ''}
       </div>
     )
