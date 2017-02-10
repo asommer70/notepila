@@ -17,8 +17,8 @@ class Folder extends Component {
   editFolder(folder, e) {
     e.preventDefault();
 
-    console.log('editFolder e:', e, 'folder:', folder);
-    if (this.props.folder._id != 'main' || this.props.folder.id != 'main') {
+    if (this.props.folder._id !== 'main' && this.props.folder.id !=='main') {
+      console.log('this.props.folder:', this.props.folder.id);
       this.setState({editFolder: !this.state.editFolder, editFolderName: (this.props.folder.doc ? this.props.folder.doc.name : this.props.folder.name)});
     }
   }

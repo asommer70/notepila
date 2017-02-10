@@ -3,6 +3,7 @@ import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 
 import { listNotes, selectNote } from '../actions/note_actions';
+import Icon from '../components/icon';
 
 class Notes extends Component {
   constructor(props) {
@@ -23,19 +24,35 @@ class Notes extends Component {
     return (
       <div>
         <h2>Notes</h2>
-        <ul>
-          {
-            this.props.notes.map((note) => {
-              return (
-                <li key={note.id}>
-                  <div onClick={() => this.props.selectNote(note)}>
-                    {note.doc.title}
+        <div className="container">
+          <div className="row">
+            {
+              this.props.notes.map((note) => {
+                let noteIcon;
+                if (this.props.active) {
+                  if (this.props.active.doc._id == note.doc._id) {
+                    noteIcon = 'activeNote';
+                  } else {
+                    noteIcon = 'note';
+                  }
+                } else {
+                  noteIcon = 'note';
+                }
+
+                return (
+                  <div key={note.id} className="col-5">
+                    <div className="note" onClick={() => this.props.selectNote(note)}>
+                      <Icon name={noteIcon} className=""/>
+                      <div className="noteTitle">
+                        {note.doc.title}
+                      </div>
+                    </div>
                   </div>
-                </li>
-              );
-            })
-          }
-        </ul>
+                );
+              })
+            }
+          </div>
+        </div>
         <p>{this.props.folder ? this.props.folder.name : ''}</p>
       </div>
     )

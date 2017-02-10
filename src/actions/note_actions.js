@@ -16,7 +16,6 @@ export function listNotes(folder) {
 
   return (dispatch) => {
     query.then((data) => {
-      // console.log('listNotes data:', data);
       dispatch({
         type: LIST_NOTES,
         payload: data.rows
@@ -60,7 +59,6 @@ export function saveNote(note) {
     type = UPDATE_NOTE;
   }
 
-  console.log('newNote:', newNote);
   const query = db.put(newNote)
 
   return (dispatch) => {
