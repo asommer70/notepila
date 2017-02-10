@@ -1,0 +1,28 @@
+$main-color: #eeeeee;
+$secondary-color: #424242;
+$width: 200px; // Change Me
+
+input {
+  display: block;
+  width: 100%;
+  padding-top: $width/15;
+  border: none;
+  border-radius: 0;
+  border-bottom: solid $width/150 $secondary-color;
+  color: $secondary-color;
+  background: $main-color;
+  font-size: $width/15;
+  &:focus, &:valid {
+    outline: none;
+  }
+
+  &.title {
+    font-size: 24px;
+    width: 98%;
+  }
+}
+
+::selection {
+  background: $secondary-color;
+  color: $main-color;
+}

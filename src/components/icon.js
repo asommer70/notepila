@@ -22,7 +22,7 @@ export default (props) => {
 
   return (
     <svg className="icon" xmlns="http://www.w3.org/2000/svg" width="150px" height="150px" viewBox="0 0 512 512">
-      <path transform="matrix(0.512,0,0,0.512,0,0)" stroke="none" style={{fill: '#fafafa'}} d={data} />
+      <path transform="matrix(0.512,0,0,0.512,0,0)" stroke="none" style={{fill: '#424242'}} d={data} />
     </svg>
   )
 }

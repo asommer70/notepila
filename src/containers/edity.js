@@ -75,7 +75,7 @@ class Edity extends Component {
     if (this.props.addNote) {
       addNote = (
         <div>
-          <input type="text" name="title" placeholder="Title" value={this.state.title} onChange={this.handleTitleChange.bind(this)} />
+          <input type="text" className="title" name="title" placeholder="Title" value={this.state.title} onChange={this.handleTitleChange.bind(this)} />
           <br/><br/>
         </div>
       );
@@ -91,7 +91,7 @@ class Edity extends Component {
           handleKeyCommand={this.handleKeyCommand}
         />
         <br/>
-        <div className="btn btn-inline btn-success" onClick={this.saveEdit.bind(this)}><Icon name={'check'} /></div> &nbsp;&nbsp;&nbsp;&nbsp;
+        <div className="btn btn-inline check" onClick={this.saveEdit.bind(this)}><Icon name={'check'} /></div> &nbsp;&nbsp;&nbsp;&nbsp;
           {this.props.note && !this.props.addNote
             ? <div className="btn btn-inline btn-small btn-danger" onClick={() => this.props.deleteNote(this.props.note.doc)}><Icon name={'x'} /></div>
             : ''}

@@ -2,6 +2,11 @@ body {
   background-color: #eeeeee;
 }
 
+input {
+  padding: 4px;
+  border-radius: 3px;
+}
+
 .menu {
   list-style: none;
   border-bottom: 1px solid #424242;
@@ -29,8 +34,12 @@ body {
   border: 2px solid #424242;
 }
 
+.searchForm {
+  display: inline-block;
+}
+
 .btn span {
-  color: #fafafa;
+  color: #424242;
 }
 
 .btn svg.icon {
@@ -39,7 +48,7 @@ body {
   margin-top: 5px;
 }
 
-.btn.btn-inline.btn-success svg.icon {
+.btn.btn-inline.check svg.icon {
   width: 24px;
   height: 24px;
   margin-top: 10px;

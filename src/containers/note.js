@@ -47,14 +47,14 @@ class Note extends Component {
 
     let titleField;
     if (this.props.note) {
-      titleField = <input type="text" name="title"
+      titleField = <input type="text" name="title" className="title"
         value={this.state.doc.title}
         onChange={this.editTitle.bind(this)} />;
     }
 
     return (
       <div>
-        <div onClick={() => this.setState({addNote: !this.state.addNote})} className="btn btn-inline btn-primary">
+        <div onClick={() => this.setState({addNote: !this.state.addNote})} className="btn btn-inline">
           <Icon name={'plus'} />
           <br/>
         </div>

@@ -29,8 +29,8 @@ class App extends Component {
             <ul className="menu">
               <li><h5>Note Pila!</h5></li>
               <li>
-                <form onSubmit={this.search.bind(this)}>
-                  <input type="text" name="search" placeholder="Search..." ref={(input) => this.input = input} />
+                <form className="searchForm" onSubmit={this.search.bind(this)}>
+                    <input type="text" id="search "name="search" placeholder="Search" ref={(input) => this.input = input} />
                 </form>
               </li>
             </ul>

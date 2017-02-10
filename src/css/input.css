@@ -1,0 +1,19 @@
+input {
+  display: block;
+  width: 100%;
+  padding-top: 13.33333px;
+  border: none;
+  border-radius: 0;
+  border-bottom: solid 1.33333px #424242;
+  color: #424242;
+  background: #eeeeee;
+  font-size: 13.33333px; }
+  input:focus, input:valid {
+    outline: none; }
+  input.title {
+    font-size: 24px;
+    width: 98%; }
+
+::selection {
+  background: #424242;
+  color: #eeeeee; }
