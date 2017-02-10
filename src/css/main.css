@@ -1,10 +1,20 @@
+/*
+ *
+ * Colors:
+ * gray: #eeeeee
+ * black: #424242
+ * white: #fafafa
+ *
+ */
+
+
 body {
   background-color: #eeeeee;
 }
 
 input {
-  padding: 4px;
-  border-radius: 3px;
+  padding: 0 5px;
+  /*border-radius: 3px;*/
 }
 
 .menu {
@@ -30,8 +40,9 @@ input {
 
 
 .DraftEditor-root {
-  padding: 20px;
-  border: 2px solid #424242;
+  padding: 5px 5px;
+  border: 1px solid #424242;
+  background-color: #fafafa;
 }
 
 .searchForm {
