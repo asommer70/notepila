@@ -2,6 +2,7 @@
  *
  * Colors:
  * gray: #eeeeee
+ * dark-gray: #e6e6e6
  * black: #424242
  * white: #fafafa
  *
@@ -17,9 +18,13 @@ input {
   /*border-radius: 3px;*/
 }
 
+svg {
+  fill: #424242;
+}
+
 .menu {
   list-style: none;
-  border-bottom: 1px solid #424242;
+  border-bottom: 1px solid #e6e6e6;
 }
 .menu h5 {
   display: inline-block;
@@ -30,14 +35,65 @@ input {
   cursor: pointer;
 }
 
+ul.folders {
+  list-style: none;
+  padding-left: 0;
+}
+
+ul.folders li {
+  margin-bottom: 10px;
+  cursor: pointer;
+  text-align: center;
+  /*text-transform: uppercase;*/
+
+  height: 100%;
+  border: 0px solid rgba(123, 123, 123, 0.498039);
+  border-radius: 4px;
+  color: #424242;
+  line-height: 40px;
+  font-size: 20px;
+  font-weight: 400;
+  background-color: #fafafa;
+  box-shadow: rgba(0,0,0,0.2) 0px 1px 2px 0px;
+
+  transition-property: background-color;
+  transition-duration: 0.2s;
+  transition-timing-function: linear;
+}
+
+ul.folders li svg {
+  vertical-align: middle;
+  width: 22px;
+  height: 22px;
+}
+
+ul.folders li:hover svg {
+  /*fill: rgba(0,0,0,0.2);*/
+}
+
+ul.folders li:hover {
+  color: #eeeeee;
+  box-shadow: rgba(0,0,0,0.2) 0px 3px 4px 0px;
+  background-color: #e6e6e6;
+}
+
+.folder {
+  display: inline-block;
+}
+
+.folderName {
+  /*dispaly: inline-block;*/
+  width: 130px;
+  background-color: #e6e6e6;
+}
+
 .new-folder {
   display: inline-block;
-  margin-left: 10px;
+  /*margin-left: 10px;*/
 }
 .new-folder input {
   padding: 5px;
 }
-
 
 .DraftEditor-root {
   padding: 5px 5px;

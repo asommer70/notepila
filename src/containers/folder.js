@@ -14,18 +14,27 @@ class Folder extends Component {
     }
   }
 
-  editFolder(e) {
+  editFolder(folder, e) {
     e.preventDefault();
-    if (this.props.folder._id != 'main') {
-      this.setState({editFolder: !this.state.editFolder, editFolderName: this.props.folder.name});
+
+    console.log('editFolder e:', e, 'folder:', folder);
+    if (this.props.folder._id != 'main' || this.props.folder.id != 'main') {
+      this.setState({editFolder: !this.state.editFolder, editFolderName: (this.props.folder.doc ? this.props.folder.doc.name : this.props.folder.name)});
     }
   }
 
   updateFolder(e) {
     e.preventDefault();
-    this.props.updateFolder(this.props.folder, this.state.editFolderName);
+    let folder;
+    if (this.props.folder.doc) {
+      folder = this.props.folder.doc;
+    } else {
+      folder = this.props.folder;
+    }
+    this.props.updateFolder(folder, this.state.editFolderName);
     this.setState({editFolder: false, editFolderName: ''});
-    this.props.selectFolder(this.props.folder._id);
+
+    this.props.selectFolder(folder._id);
   }
 
   deleteFolder(e) {
@@ -39,32 +48,33 @@ class Folder extends Component {
 
   render() {
     if (!this.props.folder) {
-      return <div>No folder selected...</div>;
+      return;
     }
 
     let folderForm = (
       <form onSubmit={this.updateFolder.bind(this)} className="new-folder">
-        <input type="text"
-               name="folder_name"
-               onChange={(e) => {this.setState({editFolderName: e.target.value})} }
-               value={this.state.editFolderName}
+        <input
+          type="text"
+          className="folderName"
+          name="folder_name"
+          onChange={(e) => {this.setState({editFolderName: e.target.value})} }
+          value={this.state.editFolderName}
         />
 
-      <div className="btn btn-inline" onClick={ () => this.setState({editFolder: false, editFolderName: ''}) }><span>CANCEL</span></div>
+        <div className="btn btn-inline" onClick={ () => this.setState({editFolder: false, editFolderName: ''}) }><span>CANCEL</span></div>
         &nbsp;&nbsp;
         <div className="btn btn-inline btn-small btn-danger" onClick={this.deleteFolder.bind(this)}><Icon name={'x'} /></div>
+        <br/><br/>
       </form>);
 
     let folderName = (
-      <div onDoubleClick={this.editFolder.bind(this)}>
-        {this.props.folder.name}
-      </div>
+      <span onDoubleClick={this.editFolder.bind(this, this.props.folder)}>
+        {this.props.folder.doc ? this.props.folder.doc.name : this.props.folder.name}
+      </span>
     )
 
     return (
-      <div>
-        Selected Folder: &nbsp;
-
+      <div className="folder">
         {this.state.editFolder ? folderForm : folderName}
       </div>
     )

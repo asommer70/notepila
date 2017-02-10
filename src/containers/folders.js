@@ -37,7 +37,7 @@ class Folders extends Component {
       <form onSubmit={this.submitNewFolder.bind(this)} className="new-folder">
         <input type="text"
                name="folder_name"
-               placeholder="Folder Name"
+               placeholder="New folder name"
                onChange={(e) => {this.setState({newFolder: e.target.value})} }
                value={this.state.newFolder} />
       </form>);
@@ -53,15 +53,24 @@ class Folders extends Component {
           {this.state.showNewFolder ? newFolder : ''}
         </div>
 
-        <Folder folder={this.props.activeFolder} />
-
         <ul className="folders">
           {
             this.props.folders.map((folder, idx) => {
+              let folderIcon;
+              if (this.props.activeFolder) {
+                if (folder.doc._id == this.props.activeFolder._id) {
+                  folderIcon = 'activeFolder';
+                } else {
+                  folderIcon = 'folder';
+                }
+              } else {
+                folderIcon = 'folder';
+              }
+
               return (
                 <li key={folder.doc._id} onClick={() => {this.props.selectFolder(folder); }}>
                   <div>
-                    {folder.doc.name}
+                    <Icon name={folderIcon} /> &nbsp;  <Folder folder={folder} />
                   </div>
                 </li>
               )
