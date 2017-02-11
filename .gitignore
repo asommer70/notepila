@@ -3,6 +3,7 @@
 .DS_Store
 npm-debug.log
 
+dist/
 dist/js/bundle.js
 dist/js/vendor.js
 dist/css/style.css

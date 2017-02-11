@@ -11,15 +11,20 @@
 
 body {
   background-color: #eeeeee;
+  font-family: 'Montserrat-Regular', serif;
 }
 
 input {
   padding: 0 5px;
-  /*border-radius: 3px;*/
+  font-family: 'Montserrat-Regular', serif;
 }
 
 svg {
   fill: #424242;
+}
+
+h2 {
+  font-family: 'Merriweather-Black', serif;
 }
 
 .menu {
@@ -51,6 +56,7 @@ ul.folders li {
   line-height: 40px;
   font-size: 20px;
   font-weight: 400;
+  font-family: 'Merriweather-Black', serif;
   background-color: #fafafa;
   box-shadow: rgba(0,0,0,0.2) 0px 1px 2px 0px;
   transition-property: background-color;

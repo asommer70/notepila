@@ -1,0 +1,9 @@
+@font-face {
+  font-family: 'Merriweather-Black';
+  src: url('/css/fonts/merriweather-black.woff') format('woff');
+}
+
+@font-face {
+  font-family: 'Montserrat-Regular';
+  src: url('/css/fonts/montserrat-regular.woff') format('woff');
+}

@@ -9,6 +9,7 @@ import './css/simple-grid.css';
 import './css/main.css';
 import './css/obvious-buttons.css';
 import './css/input.css';
+import './css/fonts.css';
 
 import reducers from './reducers';
 import Folders from './containers/folders';

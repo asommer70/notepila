@@ -4,10 +4,10 @@ const ExtractTextPlugin = require('extract-text-webpack-plugin');
 var HtmlWebpackPlugin = require('html-webpack-plugin');
 
 const VENDOR_LIBS = [
-  'react', 'react-dom', 'pouchdb', 'moment', 'draft-js'
+  'react', 'react-dom', 'redux', 'redux-thunk', 'pouchdb', 'pouchdb-quick-search', 'moment', 'draft-js', 'slugify'
 ]
 
-var distPath, indexFilename, cssFilename;
+var distPath, indexFilename, cssFilename, fonts;
 if (process.env.NODE_ENV == 'production') {
   distPath = 'dist/js';
   indexFilename = '../index.html';
@@ -39,6 +39,11 @@ const config = {
           loader: 'css-loader'
         }),
         test: /\.css$/
+      },
+      {
+        test: /\.(eot|ttf|woff|woff2)$/,
+        exclude: /node_modules/,
+        loader: 'url-loader?limit=1024&name=css/fonts/[name].[ext]'
       }
     ],
   },
@@ -54,9 +59,6 @@ const config = {
   ],
   devServer: {
     port: 3000,
-    // contentBase: "./dist",
-    // watchContentBase: true,
-    // hot: true
   }
 }
 
