@@ -4,7 +4,7 @@ const ExtractTextPlugin = require('extract-text-webpack-plugin');
 var HtmlWebpackPlugin = require('html-webpack-plugin');
 
 const VENDOR_LIBS = [
-  'react', 'react-dom', 'redux', 'redux-thunk', 'pouchdb', 'pouchdb-quick-search', 'moment', 'draft-js', 'slugify'
+  'react', 'react-dom', 'redux', 'react-redux', 'redux-thunk', 'pouchdb', 'pouchdb-quick-search', 'moment', 'draft-js', 'slugify'
 ]
 
 var distPath, indexFilename, cssFilename, fonts;
@@ -44,6 +44,11 @@ const config = {
         test: /\.(eot|ttf|woff|woff2)$/,
         exclude: /node_modules/,
         loader: 'url-loader?limit=1024&name=css/fonts/[name].[ext]'
+      },
+      {
+        test: /\.(svg|png|jpg|jpeg)$/,
+        exclude: /node_modules/,
+        loader: 'url-loader?limit=1024&name=img/[name].[ext]'
       }
     ],
   },

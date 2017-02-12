@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
+<svg width="100%" height="100%" viewBox="0 0 512 512" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xml:space="preserve" style="fill-rule:evenodd;clip-rule:evenodd;stroke-linejoin:round;stroke-miterlimit:1.41421;">
+    <g>
+        <g transform="matrix(0.914214,0,0,0.963792,22.7861,58.2613)">
+            <text x="290.08px" y="292.637px" style="font-family:'Montserrat-Regular', 'Montserrat';font-size:100px;fill:rgb(66,66,66);">Pila!</text>
+        </g>
+        <g transform="matrix(0.787088,0,0,0.787088,19.4314,73.5279)">
+            <text x="338.509px" y="197.94px" style="font-family:'Merriweather-Black', 'Merriweather';font-weight:900;font-size:100px;fill:rgb(66,66,66);">Note</text>
+        </g>
+    </g>
+    <g transform="matrix(0.816369,0,0,0.816369,-23.1848,74.3303)">
+        <g transform="matrix(0.346672,0,0,0.384179,50.4216,16.8467)">
+            <path d="M0,0L0,1000L716,1000L716,0L0,0ZM365,767L213,767L191,767L124,767L124,676L365,676L365,767ZM592,545L213,545L191,545L124,545L124,454L592,454L592,545ZM592,323L213,323L191,323L124,323L124,232L592,232L592,323Z" style="fill:rgb(66,66,66);fill-rule:nonzero;stroke:rgb(250,250,250);stroke-width:5.58px;"/>
+        </g>
+        <g transform="matrix(0.346672,0,0,0.384179,70.3659,29.6655)">
+            <path d="M0,0L0,1000L716,1000L716,0L0,0ZM365,767L213,767L191,767L124,767L124,676L365,676L365,767ZM592,545L213,545L191,545L124,545L124,454L592,454L592,545ZM592,323L213,323L191,323L124,323L124,232L592,232L592,323Z" style="fill:rgb(66,66,66);fill-rule:nonzero;stroke:rgb(250,250,250);stroke-width:5.58px;"/>
+        </g>
+        <g transform="matrix(0.346672,0,0,0.384179,93.7666,44.0418)">
+            <path d="M0,0L0,1000L716,1000L716,685.009L716,0L0,0ZM365,767L213,767L191,767L124,767L124,676L365,676L365,767ZM592,545L213,545L191,545L124,545L124,454L592,454L592,545ZM592,323L213,323L191,323L124,323L124,232L592,232L592,323Z" style="fill:rgb(66,66,66);fill-rule:nonzero;stroke:rgb(250,250,250);stroke-width:6.28px;"/>
+        </g>
+    </g>
+</svg>

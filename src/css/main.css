@@ -27,9 +27,15 @@ h2 {
   font-family: 'Merriweather-Black', serif;
 }
 
+.logo {
+  width: 95px;
+  height: 95px;
+}
+
 .menu {
   list-style: none;
   border-bottom: 1px solid #e6e6e6;
+  padding-left: 0;
 }
 .menu h5 {
   display: inline-block;
@@ -38,6 +44,12 @@ h2 {
   display: inline;
   padding: 0 1em;
   cursor: pointer;
+}
+.menu li:first-child {
+  padding-left: 0;
+}
+.menu li:first-child div {
+  display: inline;
 }
 
 ul.folders, ul.notes {
@@ -136,6 +148,11 @@ ul.folders li:hover {
 
 .searchForm {
   display: inline-block;
+  float: right;
+}
+.searchForm input {
+  font-size: 16px;
+  /*margin-bottom: 20px;*/
 }
 
 .btn span {

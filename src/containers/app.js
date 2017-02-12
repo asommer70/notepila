@@ -5,6 +5,8 @@ import { bindActionCreators } from 'redux';
 import Folders from './folders';
 import Notes from './notes';
 import Note from './note';
+import Icon from '../components/icon';
+import logo from '../img/logo.png';
 
 import { listFolders, selectFolder, addFolder } from '../actions/folder_actions';
 import { listNotes, search } from '../actions/note_actions';
@@ -27,7 +29,11 @@ class App extends Component {
         <div className="row">
           <div className="col-9">
             <ul className="menu">
-              <li><h5>Note Pila!</h5></li>
+              <li>
+                <div>
+                  <img className="logo" src={logo} />
+                </div>
+              </li>
               <li>
                 <form className="searchForm" onSubmit={this.search.bind(this)}>
                     <input type="text" id="search "name="search" placeholder="Search" ref={(input) => this.input = input} />
