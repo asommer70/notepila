@@ -137,6 +137,10 @@ ul.folders li:hover {
   height: 22px;
 }
 
+.title {
+  margin-bottom: 40px;
+}
+
 
 .new-folder {
   display: inline-block;

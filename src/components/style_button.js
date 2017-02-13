@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
-
-
+import Icon from './icon';
 
 export default class StyleButton extends Component {
   constructor() {
@@ -19,9 +18,9 @@ export default class StyleButton extends Component {
     }
 
     return (
-      <button className={className} onMouseDown={this.onToggle}>
-        {this.props.label}
-      </button>
+      <div className={'btn btn-inline ' + className} onMouseDown={this.onToggle}>
+        <Icon name={this.props.label} className={'editor-icon'} />
+      </div>
     );
   }
 }
