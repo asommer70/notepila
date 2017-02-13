@@ -5,6 +5,7 @@ import { Editor, EditorState, RichUtils, ContentState, convertToRaw, convertFrom
 
 import { saveNote, deleteNote } from '../actions/note_actions';
 import Icon from '../components/icon';
+import StyleButton from '../components/style_button';
 
 class Edity extends Component {
   constructor(props) {
@@ -17,6 +18,7 @@ class Edity extends Component {
 
     this.onChange = (editorState) => this.setState({editorState});
     this.handleKeyCommand = this.handleKeyCommand.bind(this);
+    this.toggleInlineStyle = this.toggleInlineStyle.bind(this);
   }
 
   handleKeyCommand(command) {
@@ -26,6 +28,15 @@ class Edity extends Component {
       return 'handled';
     }
     return 'not-handled';
+  }
+
+  toggleInlineStyle(inlineStyle) {
+    this.onChange(
+      RichUtils.toggleInlineStyle(
+        this.state.editorState,
+        inlineStyle
+      )
+    );
   }
 
   componentWillMount() {
@@ -81,10 +92,35 @@ class Edity extends Component {
       );
     }
 
+    var INLINE_STYLES = [
+      {label: 'Bold', style: 'BOLD'},
+      {label: 'Italic', style: 'ITALIC'},
+      {label: 'Underline', style: 'UNDERLINE'},
+      {label: 'Monospace', style: 'CODE'},
+    ];
+
+    const InlineStyleControls = (props) => {
+      var currentStyle = props.editorState.getCurrentInlineStyle();
+      return (
+        <div className="RichEditor-controls">
+          {INLINE_STYLES.map(type =>
+            <StyleButton
+              key={type.label}
+              active={currentStyle.has(type.style)}
+              label={type.label}
+              onToggle={props.onToggle}
+              style={type.style}
+            />
+          )}
+        </div>
+      );
+    };
+
     return (
       <div>
         {addNote}
 
+        {InlineStyleControls({ editorState: this.state.editorState, onToggle: () => {console.log('onToggle... this.style:', this.style)} })}
         <Editor
           editorState={this.state.editorState}
           onChange={this.onChange}

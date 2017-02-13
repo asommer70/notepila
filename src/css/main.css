@@ -47,6 +47,7 @@ h2 {
 }
 .menu li:first-child {
   padding-left: 0;
+  cursor: default;
 }
 .menu li:first-child div {
   display: inline;
