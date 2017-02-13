@@ -53,7 +53,7 @@ h2 {
   display: inline;
 }
 
-ul.folders, ul.notes {
+ul.folders {
   list-style: none;
   padding-left: 0;
 }
@@ -98,11 +98,15 @@ ul.folders li:hover {
   background-color: #e6e6e6;
 }
 
+.notes {
+  text-align: left;
+}
+
 .note {
   vertical-align: middle;
-  padding: 10px 0;
+  padding: 10px;
   cursor: pointer;
-  text-align: center;
+  text-align: left;
   border: 0px solid rgba(123, 123, 123, 0.498039);
   border-radius: 4px;
   color: #424242;
@@ -124,6 +128,7 @@ ul.folders li:hover {
 
 .noteTitle {
   display: inline;
+  text-align: left;
 }
 
 .note svg {

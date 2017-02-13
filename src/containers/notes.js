@@ -40,7 +40,7 @@ class Notes extends Component {
                 }
 
                 return (
-                  <div key={note.id} className="col-6">
+                  <div key={note.id} className="col-6 notes">
                     <div className="note" onClick={() => this.props.selectNote(note)}>
                       <Icon name={noteIcon} className=""/>
                       <div className="noteTitle">
