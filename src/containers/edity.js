@@ -19,6 +19,7 @@ class Edity extends Component {
     this.onChange = (editorState) => this.setState({editorState});
     this.handleKeyCommand = this.handleKeyCommand.bind(this);
     this.toggleInlineStyle = this.toggleInlineStyle.bind(this);
+    this.toggleBlockType = this.toggleBlockType.bind(this);
   }
 
   handleKeyCommand(command) {
@@ -35,6 +36,15 @@ class Edity extends Component {
       RichUtils.toggleInlineStyle(
         this.state.editorState,
         inlineStyle
+      )
+    );
+  }
+
+  toggleBlockType(blockType) {
+  this.onChange(
+      RichUtils.toggleBlockType(
+        this.state.editorState,
+        blockType
       )
     );
   }
@@ -92,6 +102,42 @@ class Edity extends Component {
       );
     }
 
+    const BLOCK_TYPES = [
+      {label: 'H1', style: 'header-one'},
+      {label: 'H2', style: 'header-two'},
+      {label: 'H3', style: 'header-three'},
+      {label: 'H4', style: 'header-four'},
+      {label: 'H5', style: 'header-five'},
+      {label: 'H6', style: 'header-six'},
+      {label: 'Blockquote', style: 'blockquote'},
+      {label: 'UL', style: 'unordered-list-item'},
+      {label: 'OL', style: 'ordered-list-item'},
+      {label: 'Code Block', style: 'code-block'},
+    ];
+
+    const BlockStyleControls = (props) => {
+      const {editorState} = props;
+      const selection = editorState.getSelection();
+      const blockType = editorState
+        .getCurrentContent()
+        .getBlockForKey(selection.getStartKey())
+        .getType();
+
+      return (
+        <div className="RichEditor-controls">
+          {BLOCK_TYPES.map((type) =>
+            <StyleButton
+              key={type.label}
+              active={type.style === blockType}
+              label={type.label}
+              onToggle={props.onToggle}
+              style={type.style}
+            />
+          )}
+        </div>
+      );
+    };
+
     var INLINE_STYLES = [
       {label: 'Bold', style: 'BOLD'},
       {label: 'Italic', style: 'ITALIC'},
@@ -120,7 +166,8 @@ class Edity extends Component {
       <div>
         {addNote}
 
-        {InlineStyleControls({ editorState: this.state.editorState, onToggle: () => {console.log('onToggle... this.style:', this.style)} })}
+        {InlineStyleControls({ editorState: this.state.editorState, onToggle: this.toggleInlineStyle })}
+        {BlockStyleControls({ editorState: this.state.editorState, onToggle: this.toggleBlockType })}
         <Editor
           editorState={this.state.editorState}
           onChange={this.onChange}
