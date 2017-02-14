@@ -10,7 +10,7 @@ import logo from '../img/logo.png';
 
 import { listFolders, selectFolder, addFolder } from '../actions/folder_actions';
 import { listNotes, search } from '../actions/note_actions';
-import { updateSettings } from '../actions/index';
+import { updateSettings, syncDatabase } from '../actions/index';
 
 class App extends Component {
   constructor(props) {
@@ -41,7 +41,21 @@ class App extends Component {
     }
   }
 
+  sync() {
+    // console.log('sync this.state.settings.syncUrl:', this.state.settings.syncUrl);
+    if (this.state.settings.syncUrl != '') {
+      this.props.syncDatabase(this.state.settings);
+    }
+  }
+
   render() {
+    let syncDate;
+    if (this.state.settings) {
+      syncDate = (this.state.settings.syncDate ? this.state.settings.syncDate : 'Never');
+    } else {
+      syncDate = 'Never';
+    }
+
     const settingsForm = (
       <form onSubmit={this.saveSettings.bind(this)}>
         <input
@@ -51,8 +65,12 @@ class App extends Component {
           className="settings-input"
           value={this.state.settings ? this.state.settings.syncUrl : ''}
           onChange={(e) => {this.setState({ settings: {...this.state.settings, syncUrl: e.target.value} })}} />
-        <br/>
-        <button className="btn btn-inline btn-small check"><Icon name={'check'} /></button>
+        <div className="sync-date">Last Sync: <strong>{syncDate}</strong></div>
+        <div className="settings-buttons">
+          <button className="btn btn-inline btn-small check" title="Save Settings"><Icon name={'check'} /></button>
+          &nbsp;&nbsp;
+          <button className="btn btn-inline btn-small" onClick={this.sync.bind(this)} title="Sync Database"><Icon name={'sync'} /></button>
+        </div>
       </form>
     );
 
@@ -100,7 +118,8 @@ function mapStateToProps(state) {
     notes: state.app.notes,
     activeFolder: state.app.activeFolder,
     activeNote: state.app.activeNote,
-    settings: state.app.settings
+    settings: state.app.settings,
+    sync: state.app.sync
   }
 }
 
@@ -111,7 +130,8 @@ function mapDispatchToProps(dispatch) {
     addFolder: addFolder,
     listNotes: listNotes,
     search: search,
-    updateSettings: updateSettings
+    updateSettings: updateSettings,
+    syncDatabase: syncDatabase
   }, dispatch);
 }
 

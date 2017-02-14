@@ -1,6 +1,6 @@
 import { LIST_FOLDERS, UPDATE_FOLDER, SELECT_FOLDER, ADD_FOLDER, DELETE_FOLDER } from '../actions/folder_actions';
 import { LIST_NOTES, UPDATE_NOTE, SELECT_NOTE, ADD_NOTE, DELETE_NOTE, GET_ACTIVE_NOTE } from '../actions/note_actions';
-import { SETTINGS } from '../actions/index';
+import { SETTINGS, SYNC } from '../actions/index';
 
 export default function(state = [], action) {
   switch (action.type) {
@@ -52,6 +52,8 @@ export default function(state = [], action) {
       return {...state, activeNote: action.payload};
     case SETTINGS:
       return {...state, settings: action.payload};
+    case SYNC:
+      return {...state, sync: action.payload};
     default:
       return state;
   }

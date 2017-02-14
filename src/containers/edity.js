@@ -154,12 +154,14 @@ class Edity extends Component {
         />
         <br/>
 
-        <div className="btn btn-inline check" onClick={this.saveEdit.bind(this)}><Icon name={'check'} /></div>
+        <div className="btn btn-inline check" onClick={this.saveEdit.bind(this)} title="Save Note"><Icon name={'check'} /></div>
 
         &nbsp;&nbsp;&nbsp;&nbsp;
 
         {this.props.note && !this.props.addNote
-          ? <div className="btn btn-inline btn-small btn-danger" onClick={() => this.props.deleteNote(this.props.note.doc)}><Icon name={'x'} /></div>
+          ? <div className="btn btn-inline btn-small btn-danger" onClick={() => this.props.deleteNote(this.props.note.doc)} title="Delete Note">
+              <Icon name={'x'} />
+            </div>
           : ''}
       </div>
     )

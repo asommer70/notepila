@@ -1,4 +1,6 @@
 import PouchDB from 'pouchdb';
+import moment from 'moment';
+
 PouchDB.plugin(require('pouchdb-quick-search'));
 window.PouchDB = PouchDB;
 
@@ -66,8 +68,19 @@ export const updateSettings = (settings=null) => {
     }).catch((err) => {
       dispatch({
         type: SETTINGS,
-        payload: {syncUrl: '', _id: 'settings'}
+        payload: {syncUrl: '', _id: 'settings', syncDate: ''}
       });
+    })
+  }
+}
+
+export const SYNC = 'sync';
+export const syncDatabase = (settings) => {
+  console.log('syncDatabase settings.syncUrl:', settings.syncUrl);
+  return (dispatch) => {
+    dispatch({
+      type: SYNC,
+      payload: {...settings, syncDate: moment().unix()}
     })
   }
 }
