@@ -5,6 +5,7 @@
  * dark-gray: #e6e6e6
  * black: #424242
  * white: #fafafa
+ * red: #da4f49
  *
  */
 
@@ -185,4 +186,8 @@ ul.folders li:hover {
   width: 18px;
   height: 18px;
   padding-bottom: 5px;
+}
+
+.danger {
+  color: #da4f49;
 }

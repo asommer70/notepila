@@ -14,7 +14,8 @@ class Edity extends Component {
 
     this.state = {
       editorState: EditorState.createEmpty(),
-      title: ''
+      title: '',
+      titleError: false
     }
 
     this.onChange = (editorState) => this.setState({editorState});
@@ -70,7 +71,7 @@ class Edity extends Component {
 
   handleTitleChange(e) {
     e.preventDefault();
-    this.setState({title: e.target.value});
+    this.setState({title: e.target.value, titleError: false});
   }
 
   saveEdit(e) {
@@ -87,9 +88,17 @@ class Edity extends Component {
       note.title = this.state.title;
     }
 
-    note.folder = this.props.folder ? this.props.folder._id : 'main';
-    note.body = convertToRaw(this.state.editorState.getCurrentContent());
-    this.props.saveNote(note);
+
+    // Don't save a note without a title.
+    let titleError;
+    if (note.title == '' || note.title == undefined) {
+      this.setState({titleError: !this.state.titleError});
+    } else {
+      titleError = undefined;
+      note.folder = this.props.folder ? this.props.folder._id : 'main';
+      note.body = convertToRaw(this.state.editorState.getCurrentContent());
+      this.props.saveNote(note);
+    }
   }
 
   render() {
@@ -98,6 +107,7 @@ class Edity extends Component {
       addNote = (
         <div>
           <input type="text" className="title" name="title" placeholder="Title" value={this.state.title} onChange={this.handleTitleChange.bind(this)} />
+          {this.state.titleError ? <div className="danger">Please add a title.</div> : ''}
           <br/><br/>
         </div>
       );
