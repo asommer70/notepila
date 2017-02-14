@@ -31,6 +31,11 @@ h2 {
 .logo {
   width: 75px;
   height: 75px;
+  cursor: pointer;
+}
+
+.settings-input {
+  width: 200px;
 }
 
 .menu {
@@ -180,6 +185,11 @@ ul.folders li:hover {
   width: 24px;
   height: 24px;
   margin-top: 10px;
+}
+.btn.btn-inline.btn-small.check svg.icon {
+  width: 24px;
+  height: 24px;
+  margin-top: 5px;
 }
 
 .btn.btn-small svg.icon {

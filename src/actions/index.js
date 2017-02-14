@@ -46,3 +46,28 @@ export const addDesignDoc = () => {
     console.log('bulkDocs err:', err);
   });
 }
+
+export const SETTINGS = 'settings'
+export const updateSettings = (settings=null) => {
+  if (settings) {
+    db.put(settings).catch((err) => {
+      console.log('updateSettings put err:', err);
+    });
+  }
+
+  const query = db.get('settings');
+
+  return (dispatch) => {
+    query.then((data) => {
+      dispatch({
+        type: SETTINGS,
+        payload: data
+      });
+    }).catch((err) => {
+      dispatch({
+        type: SETTINGS,
+        payload: {syncUrl: '', _id: 'settings'}
+      });
+    })
+  }
+}

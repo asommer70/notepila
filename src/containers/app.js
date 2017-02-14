@@ -10,12 +10,19 @@ import logo from '../img/logo.png';
 
 import { listFolders, selectFolder, addFolder } from '../actions/folder_actions';
 import { listNotes, search } from '../actions/note_actions';
+import { updateSettings } from '../actions/index';
 
 class App extends Component {
   constructor(props) {
     super(props);
 
-    this.props.listFolders();
+    props.updateSettings();
+    props.listFolders();
+
+    this.state = {
+      editSettings: false,
+      settings: props.settings
+    }
   }
 
   search(e) {
@@ -23,7 +30,32 @@ class App extends Component {
     this.props.search(this.input.value);
   }
 
+  saveSettings(e) {
+    e.preventDefault();
+    this.props.updateSettings(this.state.settings);
+  }
+
+  componentWillReceiveProps(nextProps) {
+    if (nextProps.settings) {
+      this.setState({settings: nextProps.settings});
+    }
+  }
+
   render() {
+    const settingsForm = (
+      <form onSubmit={this.saveSettings.bind(this)}>
+        <input
+          type="text"
+          name="syncUrl"
+          placeholder="PouchDB URL"
+          className="settings-input"
+          value={this.state.settings ? this.state.settings.syncUrl : ''}
+          onChange={(e) => {this.setState({ settings: {...this.state.settings, syncUrl: e.target.value} })}} />
+        <br/>
+        <button className="btn btn-inline btn-small check"><Icon name={'check'} /></button>
+      </form>
+    );
+
     return (
       <div className="container">
         <div className="row">
@@ -31,7 +63,8 @@ class App extends Component {
             <ul className="menu">
               <li>
                 <div>
-                  <img className="logo" src={logo} />
+                  <img className="logo" src={logo} onClick={() => {this.setState({editSettings: !this.state.editSettings}) }} />
+                  {this.state.editSettings ? settingsForm : ''}
                 </div>
               </li>
               <li>
@@ -66,7 +99,8 @@ function mapStateToProps(state) {
     folders: state.app.folders,
     notes: state.app.notes,
     activeFolder: state.app.activeFolder,
-    activeNote: state.app.activeNote
+    activeNote: state.app.activeNote,
+    settings: state.app.settings
   }
 }
 
@@ -76,7 +110,8 @@ function mapDispatchToProps(dispatch) {
     selectFolder: selectFolder,
     addFolder: addFolder,
     listNotes: listNotes,
-    search: search
+    search: search,
+    updateSettings: updateSettings
   }, dispatch);
 }
 
