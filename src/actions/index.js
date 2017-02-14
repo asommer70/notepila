@@ -76,11 +76,22 @@ export const updateSettings = (settings=null) => {
 
 export const SYNC = 'sync';
 export const syncDatabase = (settings) => {
-  console.log('syncDatabase settings.syncUrl:', settings.syncUrl);
+  let remoteDB = new PouchDB(settings.syncUrl);
+
+  let sync = db.sync(remoteDB)
+
   return (dispatch) => {
-    dispatch({
-      type: SYNC,
-      payload: {...settings, syncDate: moment().unix()}
-    })
+    sync.on('complete', () => {
+      const newSettings = {...settings, syncDate: moment().unix()};
+
+      updateSettings(newSettings);
+
+      dispatch({
+        type: SYNC,
+        payload: newSettings
+      })
+    }).on('error', (err) => {
+      console.log('db.sync err:', err);
+    });
   }
 }

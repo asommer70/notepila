@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
+import moment from 'moment';
 
 import Folders from './folders';
 import Notes from './notes';
@@ -41,8 +42,8 @@ class App extends Component {
     }
   }
 
-  sync() {
-    // console.log('sync this.state.settings.syncUrl:', this.state.settings.syncUrl);
+  sync(e) {
+    e.preventDefault();
     if (this.state.settings.syncUrl != '') {
       this.props.syncDatabase(this.state.settings);
     }
@@ -65,7 +66,7 @@ class App extends Component {
           className="settings-input"
           value={this.state.settings ? this.state.settings.syncUrl : ''}
           onChange={(e) => {this.setState({ settings: {...this.state.settings, syncUrl: e.target.value} })}} />
-        <div className="sync-date">Last Sync: <strong>{syncDate}</strong></div>
+        <div className="sync-date">Last Sync: <strong>{moment.unix(syncDate).fromNow()}</strong></div>
         <div className="settings-buttons">
           <button className="btn btn-inline btn-small check" title="Save Settings"><Icon name={'check'} /></button>
           &nbsp;&nbsp;

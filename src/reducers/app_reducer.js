@@ -53,7 +53,7 @@ export default function(state = [], action) {
     case SETTINGS:
       return {...state, settings: action.payload};
     case SYNC:
-      return {...state, sync: action.payload};
+      return {...state, settings: action.payload};
     default:
       return state;
   }
