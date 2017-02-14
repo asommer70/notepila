@@ -17,9 +17,17 @@ export default class StyleButton extends Component {
       className += ' RichEditor-activeButton';
     }
 
+    let middle;
+    if (this.props.style.substr(0, 7) == 'header-') {
+      middle = this.props.label;
+      className += ' header-btn';
+    } else {
+      middle = <Icon name={this.props.label} className={'editor-icon'} />
+    }
+
     return (
       <div className={'btn btn-inline ' + className} onMouseDown={this.onToggle}>
-        <Icon name={this.props.label} className={'editor-icon'} />
+        {middle}
       </div>
     );
   }

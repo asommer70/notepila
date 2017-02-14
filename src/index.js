@@ -11,6 +11,7 @@ import './css/obvious-buttons.css';
 import './css/input.css';
 import './css/fonts.css';
 import './css/rich-editor.css';
+import './css/dropdown.css';
 
 import reducers from './reducers';
 import Folders from './containers/folders';

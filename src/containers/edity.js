@@ -104,12 +104,12 @@ class Edity extends Component {
     }
 
     const HEADERS = [
-      {label: 'header', style: 'header-one'},
-      {label: 'header', style: 'header-two'},
-      {label: 'header', style: 'header-three'},
-      {label: 'header', style: 'header-four'},
-      {label: 'header', style: 'header-five'},
-      {label: 'header', style: 'header-six'},
+      {label: 'H1', style: 'header-one'},
+      {label: 'H2', style: 'header-two'},
+      {label: 'H3', style: 'header-three'},
+      {label: 'H4', style: 'header-four'},
+      {label: 'H5', style: 'header-five'},
+      {label: 'H6', style: 'header-six'},
     ]
 
     const BLOCK_TYPES = [
@@ -129,12 +129,13 @@ class Edity extends Component {
     ];
 
     return (
-      <div>
+      <div className="editor">
         {addNote}
 
         <EditorControl type={'inline'} editorState={this.state.editorState} onToggle={this.toggleInlineStyle} actions={INLINE_STYLES} />
         <EditorControl type={'block'} editorState={this.state.editorState} onToggle={this.toggleBlockType} actions={LIST_TYPES} />
         <EditorControl type={'block'} editorState={this.state.editorState} onToggle={this.toggleBlockType} actions={BLOCK_TYPES} />
+        <EditorControl type={'header'} editorState={this.state.editorState} onToggle={this.toggleBlockType} actions={HEADERS} />
         <Editor
           editorState={this.state.editorState}
           onChange={this.onChange}
