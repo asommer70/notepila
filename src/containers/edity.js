@@ -150,12 +150,17 @@ class Edity extends Component {
           editorState={this.state.editorState}
           onChange={this.onChange}
           handleKeyCommand={this.handleKeyCommand}
+          onBlur={this.saveEdit.bind(this)}
         />
         <br/>
-        <div className="btn btn-inline check" onClick={this.saveEdit.bind(this)}><Icon name={'check'} /></div> &nbsp;&nbsp;&nbsp;&nbsp;
-          {this.props.note && !this.props.addNote
-            ? <div className="btn btn-inline btn-small btn-danger" onClick={() => this.props.deleteNote(this.props.note.doc)}><Icon name={'x'} /></div>
-            : ''}
+
+        <div className="btn btn-inline check" onClick={this.saveEdit.bind(this)}><Icon name={'check'} /></div>
+
+        &nbsp;&nbsp;&nbsp;&nbsp;
+
+        {this.props.note && !this.props.addNote
+          ? <div className="btn btn-inline btn-small btn-danger" onClick={() => this.props.deleteNote(this.props.note.doc)}><Icon name={'x'} /></div>
+          : ''}
       </div>
     )
   }

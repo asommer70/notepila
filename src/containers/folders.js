@@ -83,7 +83,6 @@ class Folders extends Component {
 }
 
 const mapStateToProps = (state) => {
-  console.log('Folders mapStateToProps state:', state);
   return {
     folders: state.app.folders,
     activeFolder: state.app.activeFolder,

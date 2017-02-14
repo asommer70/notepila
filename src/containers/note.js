@@ -69,7 +69,6 @@ class Note extends Component {
 }
 
 const mapStateToProps = (state) => {
-  // console.log('Note mapStateToProps state:', state);
   return { note: state.app.activeNote, folder: state.app.activeFolder };
 }
 

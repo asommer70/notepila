@@ -100,7 +100,6 @@ export function updateFolder(folder, name) {
   return (dispatch) => {
     query.then((data) => {
       return db.get(data.id).then((doc) => {
-        console.log('updateFolder doc:', doc);
         dispatch({
           type: UPDATE_FOLDER,
           payload: {doc: doc, updated: doc._id}
@@ -111,7 +110,18 @@ export function updateFolder(folder, name) {
 }
 
 export function deleteFolder(folder) {
-  const query = db.remove(folder);
+
+  db.query('notes/index', {
+    key: folder.doc._id,
+    include_docs: true,
+  }).then((docs) => {
+    docs.rows.map((note) => {
+      note.doc.folder = 'main';
+      db.put(note.doc);
+    });
+  });
+
+  const query = db.remove(folder.doc);
 
   return (dispatch) => {
     query.then((data) => {
@@ -119,6 +129,8 @@ export function deleteFolder(folder) {
         type: DELETE_FOLDER,
         payload: {data: data, deleted: data.id}
       })
+    }).catch((err) => {
+      console.log('deleteFolder err:', err);
     })
   }
 }
