@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { Editor, EditorState, RichUtils, ContentState, convertToRaw, convertFromRaw } from 'draft-js';
+import moment from 'moment';
 
 import { saveNote, deleteNote } from '../actions/note_actions';
 import Icon from '../components/icon';
@@ -138,6 +139,16 @@ class Edity extends Component {
       {label: 'underline', style: 'UNDERLINE'},
     ];
 
+    // <div className="btn btn-inline check" onClick={this.saveEdit.bind(this)} title="Save Note"><Icon name={'check'} /></div>
+    // &nbsp;&nbsp;&nbsp;&nbsp;
+
+    let lastSaved;
+    if (this.props.note) {
+      lastSaved = <div className="sync-date">Last saved: <strong>{moment.unix(this.props.note.doc.updatedAt).fromNow()}</strong></div>;
+    } else {
+      lastSaved = '';
+    }
+
     return (
       <div className="editor">
         {addNote}
@@ -154,15 +165,14 @@ class Edity extends Component {
         />
         <br/>
 
-        <div className="btn btn-inline check" onClick={this.saveEdit.bind(this)} title="Save Note"><Icon name={'check'} /></div>
-
-        &nbsp;&nbsp;&nbsp;&nbsp;
-
         {this.props.note && !this.props.addNote
           ? <div className="btn btn-inline btn-small btn-danger" onClick={() => this.props.deleteNote(this.props.note.doc)} title="Delete Note">
               <Icon name={'x'} />
             </div>
           : ''}
+
+          &nbsp;&nbsp;&nbsp;&nbsp;
+          {lastSaved}
       </div>
     )
   }

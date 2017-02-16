@@ -2,6 +2,7 @@ import PouchDB from 'pouchdb';
 import moment from 'moment';
 
 PouchDB.plugin(require('pouchdb-quick-search'));
+PouchDB.plugin(require('pouchdb-upsert'));
 window.PouchDB = PouchDB;
 
 export const db = new PouchDB('notepila');

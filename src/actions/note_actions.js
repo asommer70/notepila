@@ -42,7 +42,7 @@ export function saveNote(note) {
 
   if (!note._rev) {
     newNote = {
-      _id: slugify(note.title),
+      _id: slugify(note.title, '_').toLowerCase(),
       title: note.title,
       body: note.body,
       bodyRaw: bodyRaw,
@@ -59,17 +59,41 @@ export function saveNote(note) {
     type = UPDATE_NOTE;
   }
 
-  const query = db.put(newNote)
+  // const query = db.put(newNote);
+  console.log('saveNote newNote:', newNote);
+
+  let query;
+  if (type == ADD_NOTE) {
+    query = db.putIfNotExists(newNote);
+  } else {
+    query = db.upsert(newNote._id, (doc) => {
+      console.log('upsert doc:', doc);
+      // doc.bodyRaw = doc.bodyRaw + ' ';
+      const newDoc = {}
+      for (let key in doc) {
+        if (key !== '_id' || key !== '_rev') {
+          newDoc[key] = doc[key];
+        }
+      }
+      console.log('newDoc:', newDoc);
+      return newDoc;
+    });
+  }
+
+  console.log('query:', query);
 
   return (dispatch) => {
     query.then((data) => {
-      return db.get(data.id).then((doc) => {
+      console.log('query.then data:', data);
+      return db.get(newNote._id).then((doc) => {
         dispatch({
           type: type,
           payload: doc
         })
       });
-    })
+    }).catch((err) => {
+      console.log('saveNote err:', err);
+    });
   }
 }
 
