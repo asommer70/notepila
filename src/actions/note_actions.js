@@ -32,8 +32,7 @@ export function selectNote(note) {
 }
 
 export function saveNote(note) {
-  let type;
-  let newNote;
+  let type, newNote;
   let bodyRaw = '';
 
   note.body.blocks.map((block) => {
@@ -59,32 +58,17 @@ export function saveNote(note) {
     type = UPDATE_NOTE;
   }
 
-  // const query = db.put(newNote);
-  console.log('saveNote newNote:', newNote);
-
   let query;
   if (type == ADD_NOTE) {
     query = db.putIfNotExists(newNote);
   } else {
     query = db.upsert(newNote._id, (doc) => {
-      console.log('upsert doc:', doc);
-      // doc.bodyRaw = doc.bodyRaw + ' ';
-      const newDoc = {}
-      for (let key in doc) {
-        if (key !== '_id' || key !== '_rev') {
-          newDoc[key] = doc[key];
-        }
-      }
-      console.log('newDoc:', newDoc);
-      return newDoc;
+      return newNote;
     });
   }
 
-  console.log('query:', query);
-
   return (dispatch) => {
     query.then((data) => {
-      console.log('query.then data:', data);
       return db.get(newNote._id).then((doc) => {
         dispatch({
           type: type,
