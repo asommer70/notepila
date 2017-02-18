@@ -12,14 +12,14 @@ if (process.env.NODE_ENV == 'production') {
   distPath = 'dist/js';
   indexFilename = '../index.html';
   cssFilename = '../css/style.css';
-  imgPath = 'url-loader?limit=1024&name=../img/[name].[ext]';
-  fontsPath = 'url-loader?limit=1024&name=../css/fonts/[name].[ext]';
+  imgPath = 'url-loader?limit=1024&name=../assets/img/[name].[ext]';
+  fontsPath = 'url-loader?limit=1024&name=../assets/fonts/[name].[ext]';
 } else {
   distPath = 'dist';
   indexFilename = 'index.html';
   cssFilename = 'css/style.css';
-  imgPath = 'url-loader?limit=1024&name=img/[name].[ext]';
-  fontsPath = 'url-loader?limit=1024&name=css/fonts/[name].[ext]';
+  imgPath = 'url-loader?limit=1024&name=assets/img/[name].[ext]';
+  fontsPath = 'url-loader?limit=1024&name=assets/fonts/[name].[ext]';
 }
 
 const config = {
@@ -45,7 +45,7 @@ const config = {
         test: /\.css$/
       },
       {
-        test: /\.(eot|ttf|woff|woff2)$/,
+        test: /\.woff$/,
         exclude: /node_modules/,
         loader: fontsPath
       },

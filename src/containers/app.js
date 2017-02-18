@@ -7,7 +7,7 @@ import Folders from './folders';
 import Notes from './notes';
 import Note from './note';
 import Icon from '../components/icon';
-import logo from '../img/logo.png';
+import logo from '../assets/img/logo.png';
 
 import { listFolders, selectFolder, addFolder } from '../actions/folder_actions';
 import { listNotes, search } from '../actions/note_actions';
