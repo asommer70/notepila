@@ -79,14 +79,14 @@ export const SYNC = 'sync';
 export const syncDatabase = (settings) => {
   let remoteDB = new PouchDB(settings.syncUrl);
 
-  // let sync = db.sync(remoteDB);
-  let sync = db.replicate.to(remoteDB);
+  let sync = db.sync(remoteDB);
 
   return (dispatch) => {
     sync.on('complete', () => {
       const newSettings = {...settings, syncDate: moment().unix()};
 
       updateSettings(newSettings);
+      window.location.reload();
 
       dispatch({
         type: SYNC,
