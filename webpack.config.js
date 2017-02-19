@@ -45,7 +45,7 @@ const config = {
         test: /\.css$/
       },
       {
-        test: /\.woff$/,
+        test: /\.(ttf|woff)$/,
         exclude: /node_modules/,
         loader: fontsPath
       },

@@ -25,7 +25,7 @@ svg {
 }
 
 h2 {
-  font-family: 'Merriweather-Black', serif;
+  font-family: 'Crimson Text', serif;
 }
 
 .logo {
@@ -84,7 +84,7 @@ ul.folders li {
   line-height: 40px;
   font-size: 20px;
   font-weight: 400;
-  font-family: 'Merriweather-Black', serif;
+  font-family: 'Crimson Text', serif;
   background-color: #fafafa;
   box-shadow: rgba(0,0,0,0.2) 0px 1px 2px 0px;
   transition-property: background-color;

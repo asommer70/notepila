@@ -4,6 +4,11 @@
 }
 
 @font-face {
+  font-family: 'CrimsonText-Bold';
+  src: url('../assets/fonts/CrimsonText-Bold.ttf');
+}
+
+@font-face {
   font-family: 'Montserrat-Regular';
   src: url('../assets/fonts/montserrat_regular.woff') format('woff');
 }
