@@ -1,14 +1,24 @@
 @font-face {
-  font-family: 'Merriweather-Black';
-  src: url('../assets/fonts/merriweather_black.woff') format('woff');
+  font-family: 'Roboto-Regular';
+  src: url('../assets/fonts/Roboto-Regular.ttf');
 }
 
 @font-face {
-  font-family: 'CrimsonText-Bold';
-  src: url('../assets/fonts/CrimsonText-Bold.ttf');
+  font-family: 'Roboto-Thin';
+  src: url('../assets/fonts/Roboto-Thin.ttf');
 }
 
 @font-face {
-  font-family: 'Montserrat-Regular';
-  src: url('../assets/fonts/montserrat_regular.woff') format('woff');
+  font-family: 'Roboto-Bold';
+  src: url('../assets/fonts/Roboto-Bold.ttf');
+}
+
+@font-face {
+  font-family: 'Roboto-Italic';
+  src: url('../assets/fonts/Roboto-Italic.ttf');
+}
+
+@font-face {
+  font-family: 'Roboto-BoldItalic';
+  src: url('../assets/fonts/Roboto-BoldItalic.ttf');
 }

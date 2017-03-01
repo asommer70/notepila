@@ -1,6 +1,17 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
+import Subheader from 'material-ui/Subheader';
+import {List, ListItem} from 'material-ui/List';
+import IconButton from 'material-ui/IconButton';
+import Paper from 'material-ui/Paper';
+import TextField from 'material-ui/TextField';
+import Popover from 'material-ui/Popover';
+import Divider from 'material-ui/Divider';
+import FileFolder from 'material-ui/svg-icons/file/folder';
+import FileFolderOpen from 'material-ui/svg-icons/file/folder-open';
+import CreateNewFolder from 'material-ui/svg-icons/file/create-new-folder';
+
 
 import Folder from './folder';
 import { listFolders, selectFolder, addFolder } from '../actions/folder_actions';
@@ -23,6 +34,15 @@ class Folders extends Component {
     this.setState({newFolder: '', showNewFolder: false});
   }
 
+  handleNewFolder = (event) => {
+    event.preventDefault();
+
+    this.setState({
+      showNewFolder: true,
+      anchorEl: event.currentTarget,
+    });
+  };
+
   render() {
     if (!this.props.folders) {
       return <p>No folders in the database...</p>;
@@ -33,51 +53,68 @@ class Folders extends Component {
       window.location.reload();
     }
 
+    const newFolderFormStyle = {
+      width: 300,
+      padding: 20,
+      display: 'inline-block',
+    };
+
     let newFolder = (
-      <form onSubmit={this.submitNewFolder.bind(this)} className="new-folder">
-        <input type="text"
-               name="folder_name"
-               placeholder="New folder name"
-               onChange={(e) => {this.setState({newFolder: e.target.value})} }
-               value={this.state.newFolder} />
-      </form>);
+      <Paper style={newFolderFormStyle} zDepth={5}>
+        <form onSubmit={this.submitNewFolder.bind(this)} className="new-folder">
+          <TextField
+            hintText=""
+            floatingLabelText="New Folder Name"
+            name="folder_name"
+            value={this.state.newFolder ? this.state.newFolder : ''}
+            onChange={(e) => {this.setState({newFolder: e.target.value})} }
+          />
+        </form>
+      </Paper>
+    );
+
+    const newFolderPopover = (
+      <Popover
+        open={this.state.showNewFolder}
+        anchorEl={this.state.anchorEl}
+        anchorOrigin={{horizontal: 'left', vertical: 'bottom'}}
+        targetOrigin={{horizontal: 'left', vertical: 'top'}}
+        onRequestClose={() => this.setState({showNewFolder: false})}
+      >
+        {newFolder}
+      </Popover>
+    )
 
     return (
-      <div>
-        <h2>Folders</h2>
+      <List>
+        <Subheader>Folders</Subheader>
 
-        <div>
-          <div className="btn btn-inline btn-small" onClick={ () => {this.setState({showNewFolder: !this.state.showNewFolder})} } title="Add Folder">
-            <Icon name={'plus'} />
-          </div>
-          {this.state.showNewFolder ? newFolder : ''}
-        </div>
+          <IconButton onClick={this.handleNewFolder} >
+            <CreateNewFolder />
+            {newFolderPopover}
+          </IconButton>
+          <Divider />
+          <br/>
 
-        <ul className="folders">
           {
             this.props.folders.map((folder, idx) => {
               let folderIcon;
               if (this.props.activeFolder) {
                 if (folder.doc._id == this.props.activeFolder._id) {
-                  folderIcon = 'activeFolder';
+                  folderIcon = <FileFolderOpen />;
                 } else {
-                  folderIcon = 'folder';
+                  folderIcon = <FileFolder />;
                 }
               } else {
-                folderIcon = 'folder';
+                folderIcon = <FileFolder />;
               }
 
               return (
-                <li key={folder.doc._id} onClick={() => {this.props.selectFolder(folder); }}>
-                  <div>
-                    <Icon name={folderIcon} /> &nbsp;  <Folder folder={folder} />
-                  </div>
-                </li>
+                <Folder key={folder.doc._id} folderIcon={folderIcon} folder={folder} selectFolder={this.props.selectFolder}/>
               )
             })
           }
-        </ul>
-      </div>
+      </List>
     )
   }
 }

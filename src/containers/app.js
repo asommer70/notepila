@@ -2,6 +2,15 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import moment from 'moment';
+import AppBar from 'material-ui/AppBar';
+import IconButton from 'material-ui/IconButton';
+import NavigationClose from 'material-ui/svg-icons/navigation/close';
+import NavigationMenu from 'material-ui/svg-icons/navigation/menu';
+import ActionDone from 'material-ui/svg-icons/action/done';
+import Paper from 'material-ui/Paper';
+import TextField from 'material-ui/TextField';
+import Divider from 'material-ui/Divider';
+import Popover from 'material-ui/Popover';
 
 import Folders from './folders';
 import Notes from './notes';
@@ -28,7 +37,7 @@ class App extends Component {
 
   search(e) {
     e.preventDefault();
-    this.props.search(this.input.value);
+    this.props.search(this.input.input.value);
   }
 
   saveSettings(e) {
@@ -49,6 +58,15 @@ class App extends Component {
     }
   }
 
+  handleSettings = (event) => {
+    event.preventDefault();
+
+    this.setState({
+      editSettings: true,
+      anchorEl: event.currentTarget,
+    });
+  };
+
   render() {
     let syncDate;
     if (this.state.settings) {
@@ -57,55 +75,106 @@ class App extends Component {
       syncDate = 'Never';
     }
 
+    const settingsFormStyle = {
+      width: 300,
+      padding: 20,
+      display: 'inline-block',
+    };
+
     const settingsForm = (
-      <form onSubmit={this.saveSettings.bind(this)}>
-        <input
-          type="text"
-          name="syncUrl"
-          placeholder="PouchDB URL"
-          className="settings-input"
-          value={this.state.settings ? this.state.settings.syncUrl : ''}
-          onChange={(e) => {this.setState({ settings: {...this.state.settings, syncUrl: e.target.value} })}} />
-        <div className="sync-date">Last Sync: <strong>{moment.unix(syncDate).fromNow()}</strong></div>
-        <div className="settings-buttons">
-          <button className="btn btn-inline btn-small check" title="Save Settings"><Icon name={'check'} /></button>
-          &nbsp;&nbsp;
-          <button className="btn btn-inline btn-small" onClick={this.sync.bind(this)} title="Sync Database"><Icon name={'sync'} /></button>
-        </div>
-      </form>
+      <Paper style={settingsFormStyle} zDepth={5}>
+        <form onSubmit={this.saveSettings.bind(this)}>
+            <TextField
+              hintText="http://..."
+              floatingLabelText="PouchDB Server URL"
+              id="search"
+              ref={(input) => this.input = input}
+              name="syncUrl"
+              value={this.state.settings ? this.state.settings.syncUrl : ''}
+              onChange={(e) => {this.setState({ settings: {...this.state.settings, syncUrl: e.target.value} })}}
+            />
+          <div className="settings-buttons">
+            <IconButton onClick={this.saveSettings.bind(this)}>
+              <ActionDone />
+            </IconButton>
+          </div>
+        </form>
+      </Paper>
     );
 
+    const foldersStyle = {
+      width: 200,
+      padding: 10,
+      display: 'inline-block',
+    };
+
+    const notesStyle = {
+      width: 370,
+      padding: 20,
+      display: 'inline-block',
+    };
+
+    const noteStyle = {
+      width: 580,
+      padding: 20,
+      display: 'inline-block',
+    }
+
+    const settingsPopover = (
+      <Popover
+        open={this.state.editSettings}
+        anchorEl={this.state.anchorEl}
+        anchorOrigin={{horizontal: 'left', vertical: 'bottom'}}
+        targetOrigin={{horizontal: 'left', vertical: 'top'}}
+        onRequestClose={() => this.setState({editSettings: false})}
+      >
+        {settingsForm}
+      </Popover>
+    )
+
+    const leftMenuButton = (
+      <IconButton onClick={this.handleSettings}>
+        {this.state.editSettings ? <NavigationClose /> : <NavigationMenu />}
+        {settingsPopover}
+      </IconButton>
+    )
     return (
       <div className="container">
+        <AppBar
+          title="Note Pila!"
+          iconElementLeft={leftMenuButton}
+          className='titleBar'
+        />
         <div className="row">
-          <div className="col-9">
-            <ul className="menu">
-              <li>
-                <div>
-                  <img className="logo" src={logo} onClick={() => {this.setState({editSettings: !this.state.editSettings}) }} />
-                  {this.state.editSettings ? settingsForm : ''}
-                </div>
-              </li>
-              <li>
-                <form className="searchForm" onSubmit={this.search.bind(this)}>
-                    <input type="text" id="search "name="search" placeholder="Search" ref={(input) => this.input = input} />
-                </form>
-              </li>
-            </ul>
+          <div className="col-12">
+            <form className="searchForm" onSubmit={this.search.bind(this)}>
+              <TextField
+                hintText=""
+                floatingLabelText="Search"
+                name="search"
+                id="search"
+                ref={(input) => this.input = input}
+              />
+            </form>
           </div>
         </div>
+
         <div className="row">
-          <div className="col-2">
-            <Folders folders={this.props.folders} activeFolder={this.props.activeFolder} />
+          <div className="col-2 folders">
+            <Paper style={foldersStyle} zDepth={1}>
+              <Folders folders={this.props.folders} activeFolder={this.props.activeFolder} />
+            </Paper>
           </div>
-          <div className="col-4">
-            <Notes folderId={this.props.activeFolder ? this.props.activeFolder._id : 'main'} />
+          <div className="col-4 notes-wrapper">
+              <Notes folderId={this.props.activeFolder ? this.props.activeFolder._id : 'main'} />
           </div>
           <div className="col-6">
-            <Note
-              note={this.props.activeNote !== undefined ? this.props.activeNote : null}
-              folderId={this.props.activeFolder !== undefined ? this.props.activeFolder._id : 'main'}
-            />
+            <Paper style={noteStyle} zDepth={4} className="note-wrapper">
+              <Note
+                note={this.props.activeNote !== undefined ? this.props.activeNote : null}
+                folderId={this.props.activeFolder !== undefined ? this.props.activeFolder._id : 'main'}
+              />
+            </Paper>
           </div>
         </div>
       </div>

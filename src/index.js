@@ -7,19 +7,19 @@ import thunk from 'redux-thunk';
 
 import './css/simple-grid.css';
 import './css/main.css';
-import './css/obvious-buttons.css';
-import './css/input.css';
 import './css/fonts.css';
+// import './css/draft-default.css';
 import './css/rich-editor.css';
-import './css/dropdown.css';
+import './css/media-queries.css';
 
 import reducers from './reducers';
 import Folders from './containers/folders';
 import Notes from './containers/notes';
 import App from './containers/app';
+import Material from './components/material';
 
 const createStoreWithMiddleware = applyMiddleware(thunk)(createStore);
 
 ReactDOM.render(<Provider store={createStoreWithMiddleware(reducers)}>
-                  <App />
+                  <Material />
                 </Provider>, document.getElementById('app'));

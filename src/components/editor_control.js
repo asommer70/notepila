@@ -1,4 +1,9 @@
 import React from 'react';
+import IconButton from 'material-ui/IconButton';
+import FormatSize from 'material-ui/svg-icons/editor/format-size';
+import IconMenu from 'material-ui/IconMenu';
+import MenuItem from 'material-ui/MenuItem';
+
 import StyleButton from './style_button';
 import Icon from './icon';
 
@@ -19,39 +24,31 @@ export default (props) => {
   let controls;
   if (props.type == 'header') {
       controls = (
-        <div id="dropdown">
-          <nav>
-              <ul>
-                <li>
-                  <a className="btn btn-inline RichEditor-styleButton" href="#" onClick={(e) => e.preventDefault()}>
-                    <Icon name={'header'} className={'headers'} />                  <span className="arrow-down"></span>
-
-                  </a>
-                  <br/>
-
-                  <ul>
-                    {
-                      props.actions.map((type) => {
-                        return (
-                          <li key={type.label}>
-                            <StyleButton
-                              key={type.label}
-                              active={props.type == 'inline' ? currentStyle.has(type.style) : type.style === blockType}
-                              label={type.label}
-                              onToggle={props.onToggle}
-                              style={type.style}
-                            />
-                          </li>
-                        )
-                      })
-                    }
-                  </ul>
-                </li>
-              </ul>
-          </nav>
-        </div>
+        <IconMenu
+          iconButtonElement={<IconButton><FormatSize /></IconButton>}
+          anchorOrigin={{horizontal: 'left', vertical: 'top'}}
+          targetOrigin={{horizontal: 'left', vertical: 'top'}}
+        >
+          {
+            props.actions.map((type) => {
+              let buttonStyle;
+              if (type.style === blockType) {
+                buttonStyle = {background: '#cccccc'};
+              }
+              return (
+                <MenuItem
+                  key={type.label}
+                  primaryText={type.label}
+                  onClick={ () => { props.onToggle(type.style) } }
+                  style={buttonStyle}
+                />
+              )
+            })
+          }
+        </IconMenu>
       )
   } else {
+
     controls = props.actions.map((type) => {
       return (
         <StyleButton
@@ -60,6 +57,7 @@ export default (props) => {
           label={type.label}
           onToggle={props.onToggle}
           style={type.style}
+          button={type.button}
         />
       )
     });

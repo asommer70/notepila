@@ -2,6 +2,12 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import moment from 'moment';
+import IconButton from 'material-ui/IconButton';
+import {Toolbar, ToolbarGroup, ToolbarSeparator, ToolbarTitle} from 'material-ui/Toolbar';
+import TextField from 'material-ui/TextField';
+import ActionNoteAdd from 'material-ui/svg-icons/action/note-add';
+import SyncIcon from 'material-ui/svg-icons/notification/sync';
+
 
 import { selectNote, saveNote, deleteNote } from '../actions/note_actions';
 import { updateSettings, syncDatabase } from '../actions/index';
@@ -56,9 +62,15 @@ class Note extends Component {
 
     let titleField;
     if (this.props.note) {
-      titleField = <input type="text" name="title" className="title"
-        value={this.state.doc.title}
-        onChange={this.editTitle.bind(this)} />;
+      titleField = <TextField
+                     hintText=""
+                     floatingLabelText="Title"
+                     name="title"
+                     fullWidth={true}
+                     style={{fontSize: 24}}
+                     value={this.state.doc.title}
+                     onChange={this.editTitle.bind(this)}
+                   />
     }
 
     let syncDate;
@@ -70,15 +82,21 @@ class Note extends Component {
 
     return (
       <div>
-        <div onClick={() => this.setState({addNote: !this.state.addNote})} className="btn btn-inline" title="Add Note">
-          <Icon name={'plus'} />
-          <br/>
-        </div>
 
-        &nbsp;&nbsp;&nbsp;
-        <button className="btn btn-inline btn-small" onClick={this.sync.bind(this)} title="Sync Database"><Icon name={'sync'} /></button>
-        &nbsp;&nbsp;
-        <div className="sync-date">Last synced: <strong>{moment.unix(syncDate).fromNow()}</strong></div>
+        <Toolbar>
+         <ToolbarGroup firstChild={true}>
+           <IconButton onClick={() => this.setState({addNote: !this.state.addNote})}>
+             <ActionNoteAdd />
+           </IconButton>
+
+           <IconButton onClick={this.sync.bind(this)}>
+             <SyncIcon />
+           </IconButton>
+         </ToolbarGroup>
+         <ToolbarGroup>
+           <div className="sync-date">Last synced: <strong>{moment.unix(syncDate).fromNow()}</strong></div>
+         </ToolbarGroup>
+       </Toolbar>
 
         <h3>
           {this.props.note && !this.state.addNote ? titleField : ''}

@@ -112,11 +112,12 @@ export function search(term) {
 
   return (dispatch) => {
     query.then((data) => {
-
       dispatch({
         type: LIST_NOTES,
         payload: data.rows
       });
-    })
+    }).catch((err) => {
+      console.log('search err:', err);
+    });
   }
 }

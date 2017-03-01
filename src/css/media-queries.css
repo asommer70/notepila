@@ -1,0 +1,22 @@
+@media (max-width: 1190px) {
+  div.col-2.folders {
+    width: 200px;
+    display: inline;
+  }
+
+  div.col-4.notes-wrapper {
+    width: 370px;
+    display: inline-block;
+    height: 460px;
+    overflow-x: scroll;
+  }
+  div.col-4.notes-wrapper .col-6.notes {
+    width: 160px;
+    display: inline-block;
+  }
+
+  div.note-wrapper {
+    margin-left: 20px;
+    margin-bottom: 20px;
+  }
+}
