@@ -9,3 +9,5 @@ dist/js/vendor.js
 dist/css/style.css
 node_modules/
 config.json
+
+package-lock.json
